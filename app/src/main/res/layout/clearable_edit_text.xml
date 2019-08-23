@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/clearable_edit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_text_height"
+        android:layout_centerVertical="true"
+        android:background="@android:color/white"
+        android:textColor="@color/colorHint"
+        android:maxLines="1"
+        android:textSize="@dimen/text_view_small_font_size"
+        android:paddingLeft="@dimen/edit_text_padding_left"
+        android:paddingRight="@dimen/edit_text_padding_left" />
+
+    <ImageView
+        android:id="@+id/clearable_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/edit_text_icon_padding_left"
+        android:src="@drawable/ic_vpn_key_24dp" />
+
+    <ImageView
+        android:id="@+id/clearable_image_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/edit_text_icon_padding_left"
+        android:src="@drawable/ic_cancel_24dp" />
+</RelativeLayout>

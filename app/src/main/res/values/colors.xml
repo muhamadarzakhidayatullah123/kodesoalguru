@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00a5df</color>
+    <color name="colorPrimaryDark">#00a5df</color>
+    <color name="colorAccent">#037eaa</color>
+    <color name="colorHint">#47525E</color>
+    <color name="colorLabel">#B4B5B8</color>
+    <color name="colorSeparator">#EEEFF1</color>
+    <color name="colorNavigation">#B4B5B8</color>
+    <color name="colorButton">#037eaa</color>
+    <color name="colorSuccess">#34bfa2</color>
+    <color name="colorWarning">#E7D752</color>
+    <color name="colorDanger">#f4516c</color>
+    <color name="colorProgressBarDimBackground">#CCFFFFFF</color>
+    <color name="colorPlaceholder">#B4B5B8</color>
+
+    <!--ADS-->
+    <color name="gnt_test_background_color">#00F4F4F4</color>
+    <color name="gnt_test_background_color_2">#00A3A3A3</color>
+    <color name="gnt_black">#000000</color>
+    <color name="gnt_white">#FFFFFF</color>
+    <color name="gnt_red">#FF0000</color>
+    <color name="gnt_green">#00FF00</color>
+    <color name="gnt_blue">#4285f4</color>
+    <color name="gnt_ad_green">#3A6728</color>
+    <color name="gnt_gray">#808080</color>
+    <color name="gnt_outline">#E0E0E0</color>
+    <color name="gnt_ad_notification">#FFCC66</color>
+
+</resources>

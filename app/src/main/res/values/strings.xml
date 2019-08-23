@@ -1,0 +1,121 @@
+<resources>
+    <string name="app_name">Kodesoal Guru</string>
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_exam">Ujian</string>
+    <string name="menu_result">Nilai</string>
+    <string name="menu_announcement">Pengumuman</string>
+    <string name="menu_settings">Pengaturan</string>
+    <string name="menu_help">Bantuan</string>
+    <string name="register_activity">Pendaftaran</string>
+    <string name="forgot_password_activity">Lupa Password</string>
+    <string name="home_activity">Dashboard</string>
+    <string name="result_fragment">Nilai</string>
+    <string name="dashboard_fragment">Dashboard</string>
+    <string name="exam_fragment">Ujian</string>
+    <string name="announcement_fragment">Pengumuman</string>
+    <string name="setting_fragment">Pengaturan</string>
+    <string name="detail_exam_activity">Rincian Ujian</string>
+    <string name="detail_result_activity">Rincian Nilai Ujian</string>
+    <string name="detail_account_activity">Akun</string>
+    <string name="change_email_activity">Ubah Email</string>
+    <string name="change_password_activity">Ubah Kata Sandi</string>
+    <string name="terms_activity">Syarat dan Ketentuan</string>
+    <string name="privacy_activity">Kebijakan Privasi</string>
+    <string name="toolbar_title">%s</string>
+    <string name="duration">%1$s menit</string>
+    <string name="default_timer">--:--:--</string>
+    <string name="success_token">Token benar, mohon tunggu</string>
+    <string name="yes">YA</string>
+    <string name="no">TIDAK</string>
+    <string name="agree">SETUJU</string>
+    <string name="disagree">TOLAK</string>
+    <string name="back">KEMBALI</string>
+    <string name="retry">COBA LAGI</string>
+    <string name="start">MULAI</string>
+    <string name="out">KELUAR</string>
+    <string name="in">MASUK</string>
+    <string name="send_email">KIRIM EMAIL</string>
+    <string name="repear_send_email">KIRIM ULANG EMAIL VERIFIKASI</string>
+    <string name="verify">VERIFIKASI</string>
+    <string name="refresh">MUAT ULANG</string>
+    <string name="finish">SELESAI</string>
+    <string name="success">Sukses!</string>
+    <string name="failed">Gagal!</string>
+    <string name="view_result">Lihat Nilai</string>
+    <string name="unavailable">Tidak Tersedia</string>
+    <string name="finish_exam_description">Anda telah menyelesaikan ujian</string>
+    <string name="finish_exam_guide">Tekan tombol PROSES untuk memproses ujian Anda</string>
+    <string name="process">Proses</string>
+    <string name="no_data">Tidak ada data</string>
+    <string name="welcome_text">Hai, %1$s</string>
+    <string name="view_all">Lihat Semua</string>
+
+    <!--Setting-->
+    <string name="account">Akun</string>
+    <string name="account_description">Data Diri dan Keamanan</string>
+    <string name="tos">Syarat dan Ketentuan</string>
+    <string name="tos_description">Syarat dan Ketentuan penggunaan layanan</string>
+    <string name="privacy_policy">Kebijakan Privasi</string>
+    <string name="privacy_policy_description">Kebijakan Privasi pengguna</string>
+    <string name="review">Review Aplikasi</string>
+    <string name="review_description">Review Aplikasi di Play Store</string>
+    <string name="logout">Keluar</string>
+    <string name="created_by">\u00A9 2019 Kodesoal</string>
+    <string name="email">support@kodesoal.com</string>
+
+    <!--Exam-->
+    <string name="exam_done">Ujian telah selesai</string>
+    <string name="exam_result_hide_result">Selamat, Anda telah menyelesaikan ujian.</string>
+    <string name="exam_result_show_result">Selamat, Anda telah menyelesaikan ujian, nilai Anda adalah %s</string>
+    <string name="please_wait">Mohon tunggu, jangan tutup aplikasi</string>
+    <string name="finish_exam">Akhiri Ujian?</string>
+    <string name="finish_exam_confirmation">Apakah Anda ingin mengakhiri ujian sekarang?</string>
+    <!--<string name="retry_or_contact">Mohon ulangi beberapa saat lagi atau hubungi kami</string>-->
+
+    <!--Change Email-->
+    <string name="success_change_email">Berhasil mengubah email ke %s, silakan masuk kembali dengan email baru Anda</string>
+    <string name="success_change_password">Berhasil mengubah kata sandi</string>
+
+    <!--Forgot Password-->
+    <string name="success_send_forgot_password_email">Berhasil mengirim email reset kata sandi</string>
+
+    <!--Verify Email-->
+    <string name="success_send_verify_email">Berhasil mengirim email konfirmasi, silakan cek kotak masuk email Anda: %s</string>
+
+    <!--Error messages-->
+    <string name="error_title">Terjadi kesalahan</string>
+    <string name="error_multiple_devices">Anda tidak diizinkan mengikuti ujian dalam dua perangkat secara bersamaan</string>
+    <string name="error_system">Permintaan Anda tidak dapat kami proses. Mohon ulangi beberapa saat lagi atau hubungi kami</string>
+    <string name="error_no_connetion">Tidak ada koneksi internet</string>
+    <string name="error_invalid_custom_claim">Anda tidak diperkenankan masuk. Mohon ulangi beberapa saat lagi atau hubungi kami</string>
+    <string name="error_deadline_exceeded">Waktu permintaan Anda habis. Mohon ulangi beberapa saat lagi atau hubungi kami</string>
+    <string name="error_user_not_found">Email belum terdaftar</string>
+    <string name="error_wrong_password">Password salah</string>
+    <string name="error_invalid_token">Token salah atau masa berlaku token habis</string>
+    <string name="error_change_email">Gagal mengubah email</string>
+    <string name="error_change_password">Gagal mengubah kata sandi</string>
+    <string name="error_email_not_verified">Email belum terverifikasi, mohon untuk verifikasi</string>
+    <string name="error_user_token_expired">Ada perubahan pada akun Anda, mohon untuk login ulang atau hubungi kami</string>
+    <string name="error_result_unavailable">Nilai tidak tersedia</string>
+    <string name="error_failed_send_forgot_password_email">Gagal mengirim email reset kata sandi. Mohon ulangi beberapa saat lagi atau hubungi kami</string>
+
+    <string name="error_email_already_in_use">Email sudah digunakan</string>
+    <string name="error_empty_email">Email tidak boleh kosong</string>
+    <string name="error_invalid_email">Email tidak valid</string>
+    <string name="error_old_email_equals_new_email">Email baru tidak boleh sama dengan email lama</string>
+    <string name="error_empty_password">Password tidak boleh kosong</string>
+    <string name="error_minimum_password_character">Password minimal 6 karakter</string>
+    <string name="error_password_not_match">Password baru dan password konfirmasi harus sama</string>
+
+    <!--URL-->
+    <string name="terms_url">https://kodesoal.com/student-terms</string>
+    <string name="privacy_url">https://kodesoal.com/privacy-policy</string>
+    <string name="play_store_url">https://play.google.com/store/apps/details?id=com.adigastudio.kodesoal</string>
+
+    <!--Ads-->
+    <string name="ad_app_id">ca-app-pub-9264825083683066~3782021704</string>
+    <string name="ad_unit_banner">ca-app-pub-9264825083683066/1064359026</string>
+    <string name="ad_unit_interstitial">ca-app-pub-9264825083683066/5186425102</string>
+    <string name="ad_unit_native">ca-app-pub-9264825083683066/3199282365</string>
+
+</resources>
