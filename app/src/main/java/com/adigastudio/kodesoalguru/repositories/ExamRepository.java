@@ -4,11 +4,13 @@ import android.util.Log;
 
 import com.adigastudio.kodesoalguru.models.Exam;
 import com.adigastudio.kodesoalguru.models.ExamToken;
+import com.adigastudio.kodesoalguru.models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -37,10 +39,9 @@ public class ExamRepository {
                         firestoreGetExams.onCallback(null);
                     } else {
                         firestore.collection("exams")
-                                .whereArrayContains("class", user.getStudentClass())
+                                .whereEqualTo("user", user.getUserId())
                                 .whereEqualTo("active", true)
-                                .whereGreaterThanOrEqualTo("datetime", new Date(taskServerTimeResult.getResult() - TimeUnit.MINUTES.toMillis(240)))
-                                .orderBy("datetime").limit(limit).get().addOnCompleteListener(task -> {
+                                .orderBy("datetime", Query.Direction.DESCENDING).limit(limit).get().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 if (task.getResult().getDocuments().size() == 0) {
                                     firestoreGetExams.onCallback(null);
@@ -135,26 +136,26 @@ public class ExamRepository {
             if (taskServerTimeResult.isSuccessful()) {
                 new UserRepository().getUserDetail(user -> firestore.collection("tokens").document(examId + "_" + user.getUserId())
                         .get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            long serverTimeMillis = new Date(taskServerTimeResult.getResult()).getTime();
-                            long tokenMillis = document.getTimestamp("created").toDate().getTime();
-                            long diffSeconds = TimeUnit.MILLISECONDS.toSeconds(serverTimeMillis - tokenMillis);
-                            if ((diffSeconds <= 60) && (diffSeconds >= 0) && (token.equals(document.getString("token")))) {
-                                firestoreCheckToken.onCallback(new ExamToken(true));
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    long serverTimeMillis = new Date(taskServerTimeResult.getResult()).getTime();
+                                    long tokenMillis = document.getTimestamp("created").toDate().getTime();
+                                    long diffSeconds = TimeUnit.MILLISECONDS.toSeconds(serverTimeMillis - tokenMillis);
+                                    if ((diffSeconds <= 60) && (diffSeconds >= 0) && (token.equals(document.getString("token")))) {
+                                        firestoreCheckToken.onCallback(new ExamToken(true));
+                                    } else {
+                                        firestoreCheckToken.onCallback(new ExamToken(false));
+                                    }
+                                    Log.d(TAG, "checkToken: exists");
+                                } else {
+                                    firestoreCheckToken.onCallback(new ExamToken(false));
+                                    Log.d(TAG, "checkToken: not exists");
+                                }
                             } else {
-                                firestoreCheckToken.onCallback(new ExamToken(false));
+                                firestoreCheckToken.onCallback(new ExamToken(task.getException()));
                             }
-                            Log.d(TAG, "checkToken: exists");
-                        } else {
-                            firestoreCheckToken.onCallback(new ExamToken(false));
-                            Log.d(TAG, "checkToken: not exists");
-                        }
-                    } else {
-                        firestoreCheckToken.onCallback(new ExamToken(task.getException()));
-                    }
-                }));
+                        }));
             } else {
                 firestoreCheckToken.onCallback(new ExamToken(taskServerTimeResult.getException()));
             }

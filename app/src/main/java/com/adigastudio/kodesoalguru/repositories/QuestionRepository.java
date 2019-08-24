@@ -3,13 +3,26 @@ package com.adigastudio.kodesoalguru.repositories;
 import android.util.Log;
 
 import com.adigastudio.kodesoalguru.models.Question;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+
+import static com.adigastudio.kodesoalguru.utils.MyEnum.ADD_DATA;
+import static com.adigastudio.kodesoalguru.utils.MyEnum.REMOVE_DATA;
+import static com.adigastudio.kodesoalguru.utils.MyEnum.UPDATE_DATA;
+import static com.google.firebase.firestore.Query.Direction.DESCENDING;
 
 public class QuestionRepository {
 
@@ -24,90 +37,65 @@ public class QuestionRepository {
 
     public void getQuestions(FirestoreGetQuestions firestoreGetQuestions, String examId){
         getFirestoreInstance();
+        Log.d(TAG, "examId: " + examId);
         firestore.collection("questions")
                 .whereEqualTo("exam", examId)
-                .get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (task.getResult().getDocuments().size() == 0) {
-                    firestoreGetQuestions.onCallback(null);
-                    return;
-                }
-                List<Question> questions = new ArrayList<>();
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    questions.add(new Question(
-                            document.getId(),
-                            document.getString("question"),
-                            document.getString("question_image"),
-                            document.getBoolean("question_image_status"),
-                            document.getString("question_image_information"),
-                            document.getString("choice_a"),
-                            document.getString("choice_b"),
-                            document.getString("choice_c"),
-                            document.getString("choice_d"),
-                            document.getString("choice_e"),
-                            document.getString("choice_image_a"),
-                            document.getString("choice_image_b"),
-                            document.getString("choice_image_c"),
-                            document.getString("choice_image_d"),
-                            document.getString("choice_image_e"),
-                            document.getBoolean("choice_image_status"),
-                            document.getString("correct_choice"),
-                            document.getString("basic"),
-                            document.getString("user"),
-                            document.getString("exam"),
-                            document.getTimestamp("created").toDate()
-                    ));
-                }
-                firestoreGetQuestions.onCallback(questions);
-            } else {
-                Log.d(TAG, "Error getting documents: ", task.getException());
-                List<Question> questions = new ArrayList<>();
-                questions.add(new Question(task.getException()));
-                firestoreGetQuestions.onCallback(questions);
-            }
-        });
-    }
+                .orderBy("created", DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            List<Question> questions = new ArrayList<>();
+                            questions.add(new Question(e));
+                            firestoreGetQuestions.onCallback(questions);
+                            return;
+                        }
+                        List<Question> questions = new ArrayList<>();
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            Question question = new Question();
+                            question.setQuestionId(dc.getDocument().getId());
+                            question.setQuestion(dc.getDocument().getString("question"));
+                            question.setQuestionImage(dc.getDocument().getString("question_image"));
+                            question.setQuestionImageStatus(dc.getDocument().getBoolean("question_image_status"));
+                            question.setQuestionImageInformation(dc.getDocument().getString("question_image_information"));
+                            question.setChoiceA(dc.getDocument().getString("choice_a"));
+                            question.setChoiceB(dc.getDocument().getString("choice_b"));
+                            question.setChoiceC(dc.getDocument().getString("choice_c"));
+                            question.setChoiceD(dc.getDocument().getString("choice_d"));
+                            question.setChoiceE(dc.getDocument().getString("choice_e"));
+                            question.setChoiceImageA(dc.getDocument().getString("choice_image_a"));
+                            question.setChoiceImageB(dc.getDocument().getString("choice_image_b"));
+                            question.setChoiceImageC(dc.getDocument().getString("choice_image_c"));
+                            question.setChoiceImageD(dc.getDocument().getString("choice_image_d"));
+                            question.setChoiceImageE(dc.getDocument().getString("choice_image_e"));
+                            question.setChoiceImageStatus(dc.getDocument().getBoolean("choice_image_status"));
+                            question.setCorrectChoice(dc.getDocument().getString("correct_choice"));
+                            question.setBasic(dc.getDocument().getString("basic"));
+                            question.setUserId(dc.getDocument().getString("user"));
+                            question.setExamId(dc.getDocument().getString("exam"));
+                            question.setCreated(dc.getDocument().getTimestamp("created").toDate());
+                            Log.d(TAG, "onEvent: " + dc.getDocument().getData().get("question"));
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d(TAG, "New city: " + dc.getDocument().getData());
+                                    question.setAction(ADD_DATA);
+                                    break;
+                                case MODIFIED:
+                                    Log.d(TAG, "Modified city: " + dc.getDocument().getData());
+                                    question.setAction(UPDATE_DATA);
+                                    break;
+                                case REMOVED:
+                                    Log.d(TAG, "Removed city: " + dc.getDocument().getData());
+                                    question.setAction(REMOVE_DATA);
+                                    break;
+                            }
+                            questions.add(question);
+                        }
 
-    public void getDetailQuestion(FirestoreGetDetailQuestion firestoreGetDetailQuestion, String questionId){
-        getFirestoreInstance();
-        firestore.collection("questions")
-                .document(questionId)
-                .get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    Question question = new Question(
-                            document.getId(),
-                            document.getString("question"),
-                            document.getString("question_image"),
-                            document.getBoolean("question_image_status"),
-                            document.getString("question_image_information"),
-                            document.getString("choice_a"),
-                            document.getString("choice_b"),
-                            document.getString("choice_c"),
-                            document.getString("choice_d"),
-                            document.getString("choice_e"),
-                            document.getString("choice_image_a"),
-                            document.getString("choice_image_b"),
-                            document.getString("choice_image_c"),
-                            document.getString("choice_image_d"),
-                            document.getString("choice_image_e"),
-                            document.getBoolean("choice_image_status"),
-                            document.getString("correct_choice"),
-                            document.getString("basic"),
-                            document.getString("user"),
-                            document.getString("exam"),
-                            document.getTimestamp("created").toDate());
-                    firestoreGetDetailQuestion.onCallback(question);
-                } else {
-                    firestoreGetDetailQuestion.onCallback(null);
-                }
-            } else {
-                Log.d(TAG, "get failed with ", task.getException());
-                firestoreGetDetailQuestion.onCallback(new Question(task.getException()));
-
-            }
-        });
+                        firestoreGetQuestions.onCallback(questions);
+                    }
+                });
     }
 
     public FirebaseStorage getFirebaseStorageInstance(){

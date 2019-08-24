@@ -12,7 +12,6 @@ import com.adigastudio.kodesoalguru.utils.CheckConnectionData;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import butterknife.ButterKnife;
 
 public class RegisterActivity extends AppCompatActivity {
     private RegisterActivityBinding binding;
@@ -22,7 +21,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(RegisterActivity.this, R.layout.register_activity);
-        ButterKnife.bind(this);
 
         binding.adView.loadAd(new AdConfig().getAdRequest());
 

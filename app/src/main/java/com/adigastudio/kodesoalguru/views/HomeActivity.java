@@ -35,7 +35,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import butterknife.ButterKnife;
 
 import static com.adigastudio.kodesoalguru.utils.MyEnum.FAILED_MESSAGE;
 import static com.adigastudio.kodesoalguru.utils.MyEnum.FRAGMENT;
@@ -53,7 +52,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(HomeActivity.this, R.layout.home_activity);
-        ButterKnife.bind(this);
 
         checkUser();
 

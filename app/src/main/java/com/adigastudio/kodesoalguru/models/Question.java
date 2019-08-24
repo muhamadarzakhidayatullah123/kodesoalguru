@@ -24,10 +24,11 @@ public class Question {
     private String userId;
     private String examId;
     private Date created;
+    private int action;
     private Throwable error;
 
 
-    public Question(String questionId, String question, String questionImage, boolean questionImageStatus, String questionImageInformation, String choiceA, String choiceB, String choiceC, String choiceD, String choiceE, String choiceImageA, String choiceImageB, String choiceImageC, String choiceImageD, String choiceImageE, boolean choiceImageStatus, String correctChoice, String basic, String userId, String examId, Date created) {
+    public Question(String questionId, String question, String questionImage, boolean questionImageStatus, String questionImageInformation, String choiceA, String choiceB, String choiceC, String choiceD, String choiceE, String choiceImageA, String choiceImageB, String choiceImageC, String choiceImageD, String choiceImageE, boolean choiceImageStatus, String correctChoice, String basic, String userId, String examId, Date created, int action) {
         this.questionId = questionId;
         this.question = question;
         this.questionImage = questionImage;
@@ -49,6 +50,18 @@ public class Question {
         this.userId = userId;
         this.examId = examId;
         this.created = created;
+        this.action = action;
+    }
+
+    public Question() {
+    }
+
+    public int getAction() {
+        return action;
+    }
+
+    public void setAction(int action) {
+        this.action = action;
     }
 
     public Question(Throwable error) {

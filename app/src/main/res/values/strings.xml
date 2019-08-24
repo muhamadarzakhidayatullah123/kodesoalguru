@@ -49,6 +49,8 @@
     <string name="no_data">Tidak ada data</string>
     <string name="welcome_text">Hai, %1$s</string>
     <string name="view_all">Lihat Semua</string>
+    <string name="basic">KD: %s</string>
+    <string name="correct_choice">Jawaban: %s</string>
 
     <!--Setting-->
     <string name="account">Akun</string>

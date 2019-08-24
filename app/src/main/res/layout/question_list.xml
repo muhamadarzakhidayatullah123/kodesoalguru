@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="question"
+            type="com.adigastudio.kodesoalguru.models.Question" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/question_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/card_elevation"
+        android:paddingTop="@dimen/edit_text_padding_small"
+        android:paddingBottom="@dimen/edit_text_padding_small"
+        android:layout_marginTop="@dimen/card_margin"
+        app:cardPreventCornerOverlap="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text_basic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@{@string/basic(question.basic)}"
+                android:textSize="@dimen/label_font_size"
+                android:textColor="@android:color/white"
+                android:background="@drawable/shape_rounded_rectangle_primary"
+                android:paddingLeft="@dimen/edit_text_padding_medium"
+                android:paddingTop="@dimen/edit_text_padding_small"
+                android:paddingRight="@dimen/edit_text_padding_medium"
+                android:paddingBottom="@dimen/edit_text_padding_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="text_basic" />
+
+            <TextView
+                android:id="@+id/text_correct_choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rounded_rectangle_nocolor_success_outline"
+                android:paddingLeft="@dimen/edit_text_padding_medium"
+                android:paddingTop="@dimen/edit_text_padding_small"
+                android:paddingRight="@dimen/edit_text_padding_medium"
+                android:paddingBottom="@dimen/edit_text_padding_small"
+                android:textColor="@color/colorSuccess"
+                android:text="@{@string/correct_choice(question.correctChoice)}"
+                android:textSize="@dimen/label_font_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="text_correct_choice" />
+
+            <TextView
+                android:id="@+id/text_question"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:textSize="@dimen/text_view_font_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_basic"
+                app:textHtml="@{question.question}"
+                tools:text="text_question" />
+
+            <com.github.chrisbanes.photoview.PhotoView
+                android:id="@+id/image_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:imageResource="@{question.questionImage}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_question" />
+
+            <TextView
+                android:id="@+id/text_image_question_information"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:textSize="@dimen/text_view_font_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_question"
+                app:textHtml="@{question.questionImageInformation}"
+                tools:text="text_question_image_information" />
+
+            <com.adigastudio.kodesoalguru.utils.radiobutton.PresetRadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingBottom="@dimen/edit_text_padding_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_image_question_information">
+
+                <com.adigastudio.kodesoalguru.utils.radiobutton.PresetRadioButton
+                    android:id="@+id/choice_a"
+                    android:layout_width="@dimen/choice_width"
+                    android:layout_height="@dimen/choice_height"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_rectangle_nocolor_outline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:presetButtonValueText="A" />
+
+                <TextView
+                    android:id="@+id/text_choice_a"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:minHeight="@dimen/choice_height"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/choice_a"
+                    app:layout_constraintTop_toTopOf="@id/choice_a"
+                    app:textHtml="@{question.choiceA}" />
+
+                <com.github.chrisbanes.photoview.PhotoView
+                    android:id="@+id/image_choice_a"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:minHeight="@dimen/choice_height"
+                    app:imageResource="@{question.choiceImageA}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/choice_a"
+                    app:layout_constraintTop_toTopOf="@id/choice_a" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="text_choice_a,image_choice_a" />
+
+                <com.adigastudio.kodesoalguru.utils.radiobutton.PresetRadioButton
+                    android:id="@+id/choice_b"
+                    android:layout_width="@dimen/choice_width"
+                    android:layout_height="@dimen/choice_height"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_rectangle_nocolor_outline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barrier_a"
+                    app:presetButtonValueText="B" />
+
+                <TextView
+                    android:id="@+id/text_choice_b"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:minHeight="@dimen/choice_height"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/choice_b"
+                    app:layout_constraintTop_toTopOf="@id/choice_b"
+                    app:textHtml="@{question.choiceB}" />
+
+                <com.github.chrisbanes.photoview.PhotoView
+                    android:id="@+id/image_choice_b"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:minHeight="@dimen/choice_height"
+                    app:imageResource="@{question.choiceImageB}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/choice_b"
+                    app:layout_constraintTop_toTopOf="@id/choice_b" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="text_choice_b,image_choice_b" />
+
+                <com.adigastudio.kodesoalguru.utils.radiobutton.PresetRadioButton
+                    android:id="@+id/choice_c"
+                    android:layout_width="@dimen/choice_width"
+                    android:layout_height="@dimen/choice_height"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_rectangle_nocolor_outline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barrier_b"
+                    app:presetButtonValueText="C" />
+
+                <TextView
+                    android:id="@+id/text_choice_c"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:minHeight="@dimen/choice_height"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/choice_c"
+                    app:layout_constraintTop_toTopOf="@id/choice_c"
+                    app:textHtml="@{question.choiceC}" />
+
+                <com.github.chrisbanes.photoview.PhotoView
+                    android:id="@+id/image_choice_c"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:minHeight="@dimen/choice_height"
+                    app:imageResource="@{question.choiceImageC}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/choice_c"
+                    app:layout_constraintTop_toTopOf="@id/choice_c" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="text_choice_c,image_choice_c" />
+
+                <com.adigastudio.kodesoalguru.utils.radiobutton.PresetRadioButton
+                    android:id="@+id/choice_d"
+                    android:layout_width="@dimen/choice_width"
+                    android:layout_height="@dimen/choice_height"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_rectangle_nocolor_outline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barrier_c"
+                    app:presetButtonValueText="D" />
+
+                <TextView
+                    android:id="@+id/text_choice_d"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:minHeight="@dimen/choice_height"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/choice_d"
+                    app:layout_constraintTop_toTopOf="@id/choice_d"
+                    app:textHtml="@{question.choiceD}" />
+
+                <com.github.chrisbanes.photoview.PhotoView
+                    android:id="@+id/image_choice_d"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:minHeight="@dimen/choice_height"
+                    app:imageResource="@{question.choiceImageD}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/choice_d"
+                    app:layout_constraintTop_toTopOf="@id/choice_d" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier_d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="text_choice_d,image_choice_d" />
+
+
+                <com.adigastudio.kodesoalguru.utils.radiobutton.PresetRadioButton
+                    android:id="@+id/choice_e"
+                    android:layout_width="@dimen/choice_width"
+                    android:layout_height="@dimen/choice_height"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_rectangle_nocolor_outline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barrier_d"
+                    app:presetButtonValueText="E" />
+
+                <TextView
+                    android:id="@+id/text_choice_e"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:minHeight="@dimen/choice_height"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/choice_e"
+                    app:layout_constraintTop_toTopOf="@id/choice_e"
+                    app:textHtml="@{question.choiceE}" />
+
+                <com.github.chrisbanes.photoview.PhotoView
+                    android:id="@+id/image_choice_e"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:minHeight="@dimen/choice_height"
+                    app:imageResource="@{question.choiceImageE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/choice_e"
+                    app:layout_constraintTop_toTopOf="@id/choice_e" />
+
+            </com.adigastudio.kodesoalguru.utils.radiobutton.PresetRadioGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

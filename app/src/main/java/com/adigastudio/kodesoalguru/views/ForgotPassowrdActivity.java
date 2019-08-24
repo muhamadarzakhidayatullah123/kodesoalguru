@@ -30,7 +30,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
-import butterknife.ButterKnife;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.adigastudio.kodesoalguru.utils.MyEnum.FAILED_MESSAGE;
@@ -46,7 +45,6 @@ public class ForgotPassowrdActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(ForgotPassowrdActivity.this, R.layout.forgot_password_activity);
-        ButterKnife.bind(this);
 
         binding.adView.loadAd(new AdConfig().getAdRequest());
         loadInterstitialAd();

@@ -29,7 +29,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
-import butterknife.ButterKnife;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.adigastudio.kodesoalguru.utils.MyEnum.FAILED_MESSAGE;
@@ -45,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(LoginActivity.this, R.layout.login_activity);
-        ButterKnife.bind(this);
 
         viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         binding.setViewModel(viewModel);

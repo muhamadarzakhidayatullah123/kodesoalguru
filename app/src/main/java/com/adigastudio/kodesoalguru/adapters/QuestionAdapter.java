@@ -11,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adigastudio.kodesoalguru.R;
-import com.adigastudio.kodesoalguru.databinding.AdUnifiedExamBinding;
-import com.adigastudio.kodesoalguru.databinding.ExamListBinding;
+import com.adigastudio.kodesoalguru.databinding.AdUnifiedQuestionBinding;
+import com.adigastudio.kodesoalguru.databinding.QuestionListBinding;
 import com.adigastudio.kodesoalguru.interfaces.MyListeners.OnItemClickedListener;
-import com.adigastudio.kodesoalguru.models.Exam;
+import com.adigastudio.kodesoalguru.models.Question;
 import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAdView;
@@ -26,20 +26,20 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ViewHolder> implements Filterable {
+public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> implements Filterable {
 
-    private String TAG = "ExamAdapter";
-    private List<Object> exams = new ArrayList<>();
-    private List<Object> examsFiltered = new ArrayList<>();
+    private String TAG = "QuestionAdapter";
+    private List<Object> questions = new ArrayList<>();
+    private List<Object> questionsFiltered = new ArrayList<>();
     private Context context;
-    private OnItemClickedListener<Exam> onItemClickedListener;
+    private OnItemClickedListener<Question> onItemClickedListener;
     private LayoutInflater layoutInflater;
     private final int MENU_ITEM_VIEW_TYPE = 0;
     private final int UNIFIED_NATIVE_AD_VIEW_TYPE = 1;
 
-    public ExamAdapter(Context context, List<Object> exams, OnItemClickedListener<Exam> onItemClickedListener) {
-        this.exams = exams;
-        this.examsFiltered = exams;
+    public QuestionAdapter(Context context, List<Object> questionsFiltered, OnItemClickedListener<Question> onItemClickedListener) {
+        this.questions = questionsFiltered;
+        this.questionsFiltered = questionsFiltered;
         this.context = context;
         this.onItemClickedListener = onItemClickedListener;
         this.layoutInflater = LayoutInflater.from(context);
@@ -50,14 +50,14 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ViewHolder> im
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case UNIFIED_NATIVE_AD_VIEW_TYPE:
-                AdUnifiedExamBinding adBinding = DataBindingUtil.inflate(layoutInflater, R.layout.ad_unified_exam, parent, false);
+                AdUnifiedQuestionBinding adBinding = DataBindingUtil.inflate(layoutInflater, R.layout.ad_unified_question, parent, false);
                 return new ViewHolder(adBinding);
             case MENU_ITEM_VIEW_TYPE:
                 // Fall through.
             default:
-                ExamListBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.exam_list, parent, false);
+                QuestionListBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.question_list, parent, false);
                 binding.getRoot().setOnClickListener(v -> {
-                    final Exam chosen = binding.getExam();
+                    final Question chosen = binding.getQuestion();
                     if (chosen != null) {
                         onItemClickedListener.onClicked(chosen);
                     }
@@ -68,7 +68,7 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ViewHolder> im
 
     @Override
     public int getItemViewType(int position) {
-        Object recyclerViewItem = examsFiltered.get(position);
+        Object recyclerViewItem = questionsFiltered.get(position);
         if (recyclerViewItem instanceof UnifiedNativeAd) {
             return UNIFIED_NATIVE_AD_VIEW_TYPE;
         }
@@ -77,18 +77,17 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ViewHolder> im
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.bindResult(examsFiltered.get(position));
         int viewType = getItemViewType(position);
         switch (viewType) {
             case UNIFIED_NATIVE_AD_VIEW_TYPE:
-                UnifiedNativeAd nativeAd = (UnifiedNativeAd) examsFiltered.get(position);
+                UnifiedNativeAd nativeAd = (UnifiedNativeAd) questionsFiltered.get(position);
 //                populateNativeAdView(nativeAd, holder.adBinding.adView);
                 populateNativeAdView(nativeAd, holder.adBinding.nativeAdView);
                 break;
             case MENU_ITEM_VIEW_TYPE:
                 // fall through
             default:
-                holder.bindResult(examsFiltered.get(position));
+                holder.bindResult(questionsFiltered.get(position));
 
         }
     }
@@ -104,13 +103,13 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ViewHolder> im
             case MENU_ITEM_VIEW_TYPE:
                 // fall through
             default:
-                holder.examBinding.unbind();
+                holder.questionBinding.unbind();
         }
     }
 
     @Override
     public int getItemCount() {
-        return examsFiltered == null ? 0 : examsFiltered.size();
+        return questionsFiltered == null ? 0 : questionsFiltered.size();
     }
 
     @Override
@@ -120,48 +119,54 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ViewHolder> im
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
                 if (charString.isEmpty()) {
-                    examsFiltered = exams;
+                    questionsFiltered = questions;
                 } else {
                     List<Object> filteredList = new ArrayList<>();
-                    for (Object row : exams) {
-                        if (row instanceof Exam) {
-                            Exam exam = (Exam) row;
-                            if (exam.getTitle().toLowerCase().contains(charString.toLowerCase()) ||
-                                    exam.getSubject().toLowerCase().contains(charString.toLowerCase())) {
+                    for (Object row : questions) {
+                        if (row instanceof Question) {
+                            Question exam = (Question) row;
+                            if ( exam.getQuestion().toLowerCase().contains(charString.toLowerCase()) ||
+                                    exam.getQuestionImageInformation().toLowerCase().contains(charString.toLowerCase()) ||
+                                    exam.getChoiceA().toLowerCase().contains(charString.toLowerCase()) ||
+                                    exam.getChoiceB().toLowerCase().contains(charString.toLowerCase()) ||
+                                    exam.getChoiceC().toLowerCase().contains(charString.toLowerCase()) ||
+                                    exam.getChoiceD().toLowerCase().contains(charString.toLowerCase()) ||
+                                    exam.getChoiceE().toLowerCase().contains(charString.toLowerCase()) ||
+                                    exam.getBasic().toLowerCase().contains(charString.toLowerCase()) ) {
                                 filteredList.add(row);
                             }
                         }
                     }
-                    examsFiltered = filteredList;
+                    questionsFiltered = filteredList;
                 }
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = examsFiltered;
+                filterResults.values = questionsFiltered;
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                examsFiltered = (ArrayList<Object>) filterResults.values;
+                questionsFiltered = (ArrayList<Object>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        private ExamListBinding examBinding;
-        private AdUnifiedExamBinding adBinding;
+        private QuestionListBinding questionBinding;
+        private AdUnifiedQuestionBinding adBinding;
 
-        ViewHolder(ExamListBinding binding) {
+        ViewHolder(QuestionListBinding binding) {
             super(binding.getRoot());
-            this.examBinding = binding;
+            this.questionBinding = binding;
         }
 
-        void bindResult(Object result) {
-            examBinding.setExam((Exam) result);
-            examBinding.executePendingBindings();
+        void bindResult(Object question) {
+            questionBinding.setQuestion((Question) question);
+            questionBinding.executePendingBindings();
         }
 
-        ViewHolder(AdUnifiedExamBinding binding){
+        ViewHolder(AdUnifiedQuestionBinding binding){
             super(binding.getRoot());
             this.adBinding = binding;
             adBinding.nativeAdView.setHeadlineView(adBinding.nativeAdView.findViewById(R.id.text_headline));

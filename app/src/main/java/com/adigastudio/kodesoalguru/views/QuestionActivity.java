@@ -3,105 +3,88 @@ package com.adigastudio.kodesoalguru.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.adigastudio.kodesoalguru.MainApplication;
 import com.adigastudio.kodesoalguru.R;
 import com.adigastudio.kodesoalguru.adapters.EmptyAdapter;
 import com.adigastudio.kodesoalguru.adapters.ExamAdapter;
-import com.adigastudio.kodesoalguru.databinding.ExamFragmentBinding;
-import com.adigastudio.kodesoalguru.interfaces.MyListeners;
+import com.adigastudio.kodesoalguru.adapters.QuestionAdapter;
+import com.adigastudio.kodesoalguru.databinding.QuestionActivityBinding;
 import com.adigastudio.kodesoalguru.interfaces.MyListeners.OnItemClickedListener;
-import com.adigastudio.kodesoalguru.interfaces.MyListeners.OnItemListClickedListener;
 import com.adigastudio.kodesoalguru.models.Exam;
+import com.adigastudio.kodesoalguru.models.Question;
 import com.adigastudio.kodesoalguru.utils.AdConfig;
 import com.adigastudio.kodesoalguru.utils.MyErrorHandling;
-import com.adigastudio.kodesoalguru.utils.MySnackBar;
-import com.adigastudio.kodesoalguru.utils.MyTextView;
-import com.adigastudio.kodesoalguru.viewmodels.ExamViewModel;
+import com.adigastudio.kodesoalguru.viewmodels.LoginViewModel;
+import com.adigastudio.kodesoalguru.viewmodels.QuestionViewModel;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.adigastudio.kodesoalguru.utils.MyEnum.DEFAULT_QUERY_LIMIT;
-import static com.adigastudio.kodesoalguru.utils.MyEnum.FAILED_MESSAGE;
 
-public class ExamFragment extends Fragment {
-    private ExamViewModel viewModel;
-    private ExamFragmentBinding binding;
-    private ExamAdapter adapter;
-    private OnItemClickedListener<Exam> onItemClickedListener;
+public class QuestionActivity extends AppCompatActivity {
+    private QuestionViewModel viewModel;
+    private QuestionActivityBinding binding;
+    private QuestionAdapter adapter;
+    private OnItemClickedListener<Question> onItemClickedListener;
 
     private List<UnifiedNativeAd> mNativeAds = new ArrayList<>();
     private AdLoader adLoader;
     private List<Object> mRecyclerViewItems = new ArrayList<>();
+    private String examId;
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        binding = DataBindingUtil.setContentView(QuestionActivity.this, R.layout.question_activity);
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.exam_fragment, container, false);
-
+        checkUser();
         binding.adView.loadAd(new AdConfig().getAdRequest());
 
-        viewModel = ViewModelProviders.of(this).get(ExamViewModel.class);
-        viewModel.init(DEFAULT_QUERY_LIMIT);
-        binding.appBar.toolbar.setNavigationIcon(null);
+        Intent intent = getIntent();
+        examId = intent.getStringExtra("exam_id");
 
-        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        viewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
+        viewModel.init(examId);
+
+        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerView.setLayoutManager(linearLayoutManager);
         binding.recyclerView.setAdapter(new EmptyAdapter());
 
-        onItemClickedListener = item -> {
-            Intent intent = new Intent(getContext(), DetailExamActivity.class);
-            intent.putExtra("exam_id", item.getExamId());
-            startActivity(intent);
-        };
+//        onItemClickedListener = item -> {
+//            Intent intent = new Intent(getApplicationContext(), DetailExamActivity.class);
+//            intent.putExtra("exam_id", item.getExamId());
+//            startActivity(intent);
+//        };
 
         binding.layoutSearch.setVisibility(View.GONE);
-        viewModel.getIsLoading().observe(getViewLifecycleOwner(), status -> {
+        viewModel.getIsLoading().observe(this, status -> {
             if(status){
-                binding.swipeRefreshLayout.setVisibility(View.GONE);
+                binding.mainLayout.setVisibility(View.GONE);
                 binding.shimmerViewContainer.startShimmer();
                 binding.shimmerViewContainer.setVisibility(View.VISIBLE);
             }
             else{
-                binding.swipeRefreshLayout.setVisibility(View.VISIBLE);
+                binding.mainLayout.setVisibility(View.VISIBLE);
                 binding.shimmerViewContainer.stopShimmer();
                 binding.shimmerViewContainer.setVisibility(View.GONE);
             }
         });
 
-        viewModel.getIsRefreshLoading().observe(getViewLifecycleOwner(), status -> {
-            if(status){
-                binding.swipeRefreshLayout.setRefreshing(true);
-            }
-            else{
-                binding.swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-
-        viewModel.getExams().observe(getViewLifecycleOwner(), results -> {
+        viewModel.getQuestions().observe(this, results -> {
             mRecyclerViewItems.clear();
             mNativeAds.clear();
             insertData(results);
@@ -109,15 +92,9 @@ public class ExamFragment extends Fragment {
             initRecyclerView();
         });
 
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
-            viewModel.refresh(DEFAULT_QUERY_LIMIT);
-        });
-
         binding.editSearch.setOnTextChangedListener(text -> {
             adapter.getFilter().filter(text);
         });
-
-        return binding.getRoot();
     }
 
     @Override
@@ -125,26 +102,25 @@ public class ExamFragment extends Fragment {
         super.onDestroy();
         binding.adView.setAdListener(null);
         binding.adView.destroy();
-        MainApplication.getRefWatcher(getActivity()).watch(this);
+        MainApplication.getRefWatcher(getApplicationContext()).watch(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.refresh(DEFAULT_QUERY_LIMIT);
     }
 
-    private void insertData(List<Exam> results){
-        mRecyclerViewItems.addAll(results);
+    private void insertData(List<Question> questions){
+        mRecyclerViewItems.addAll(questions);
     }
 
     private void initRecyclerView(){
-        adapter = new ExamAdapter(getActivity(), mRecyclerViewItems, onItemClickedListener);
+        adapter = new QuestionAdapter(getApplicationContext(), mRecyclerViewItems, onItemClickedListener);
         if (adapter.getItemCount() > 0) {
             if (mRecyclerViewItems.get(0) instanceof Exam) {
                 Exam result = (Exam) mRecyclerViewItems.get(0);
                 if (result.getError() != null) {
-                    Intent intent = new Intent(getActivity(), ErrorActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ErrorActivity.class);
                     intent.putExtra("error_message", MyErrorHandling.getErrorMessageFromThrowable(result.getError()));
                     startActivity(intent);
                     return;
@@ -161,7 +137,7 @@ public class ExamFragment extends Fragment {
     }
 
     private void loadNativeAds() {
-        AdLoader.Builder builder = new AdLoader.Builder(getContext(), getString(R.string.ad_unit_native));
+        AdLoader.Builder builder = new AdLoader.Builder(getApplicationContext(), getString(R.string.ad_unit_native));
         adLoader = builder.forUnifiedNativeAd(
                 unifiedNativeAd -> {
                     // A native ad loaded successfully, check if the ad loader has finished loading
@@ -202,5 +178,17 @@ public class ExamFragment extends Fragment {
         }
 
         adapter.notifyDataSetChanged();
+    }
+
+    private void checkUser(){
+        LoginViewModel loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        loginViewModel.getCurrentUser().observe(this, user -> {
+            if (user == null) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
     }
 }

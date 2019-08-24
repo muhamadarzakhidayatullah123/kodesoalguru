@@ -12,4 +12,8 @@ public class MyEnum {
     public static final int DEFAULT_QUERY_LIMIT = 1000;
     public static final int DEFAULT_DASHBOARD_QUERY_LIMIT = 3;
 
+    public static final int REMOVE_DATA = 0;
+    public static final int ADD_DATA = 1;
+    public static final int UPDATE_DATA = 2;
+
 }
