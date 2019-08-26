@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/edit_text_padding_medium">
+        
+        <View
+            android:id="@+id/text_name_info"
+            android:layout_width="@dimen/placeholder_short_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            android:layout_marginTop="@dimen/placeholder_activity_padding"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/text_name"
+            android:layout_width="@dimen/placeholder_medium_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            app:layout_constraintTop_toTopOf="@id/text_name_info"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            android:id="@+id/text_student_number_info"
+            android:layout_width="@dimen/placeholder_short_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            android:layout_marginTop="@dimen/placeholder_activity_medium_padding"
+            app:layout_constraintTop_toBottomOf="@id/text_name_info"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/text_student_number"
+            android:layout_width="@dimen/placeholder_medium_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            app:layout_constraintTop_toTopOf="@id/text_student_number_info"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            android:id="@+id/text_student_class_info"
+            android:layout_width="@dimen/placeholder_short_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            android:layout_marginTop="@dimen/placeholder_activity_medium_padding"
+            app:layout_constraintTop_toBottomOf="@id/text_student_number_info"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/text_student_class"
+            android:layout_width="@dimen/placeholder_short_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            app:layout_constraintTop_toTopOf="@id/text_student_class_info"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <View
+            android:id="@+id/text_instance_info"
+            android:layout_width="@dimen/placeholder_short_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            android:layout_marginTop="@dimen/placeholder_activity_medium_padding"
+            app:layout_constraintTop_toBottomOf="@id/text_student_class_info"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/text_instance"
+            android:layout_width="@dimen/placeholder_medium_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            app:layout_constraintTop_toTopOf="@id/text_instance_info"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            android:id="@+id/text_email_info"
+            android:layout_width="@dimen/placeholder_short_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            android:layout_marginTop="@dimen/placeholder_activity_big_padding"
+            app:layout_constraintTop_toBottomOf="@id/text_instance_info"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/text_email"
+            android:layout_width="@dimen/placeholder_medium_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            app:layout_constraintTop_toTopOf="@id/text_email_info"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            android:id="@+id/text_password_info"
+            android:layout_width="@dimen/placeholder_short_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            android:layout_marginTop="@dimen/placeholder_activity_medium_padding"
+            app:layout_constraintTop_toBottomOf="@id/text_email_info"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/text_password"
+            android:layout_width="@dimen/placeholder_medium_width"
+            android:layout_height="@dimen/placeholder_height"
+            android:background="@drawable/shape_placeholder"
+            app:layout_constraintTop_toTopOf="@id/text_password_info"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

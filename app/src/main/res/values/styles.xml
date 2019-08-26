@@ -32,6 +32,11 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="CustomSubtitle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <style name="ProgressBarCustomColor" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorAccent">#F00</item>
     </style>

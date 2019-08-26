@@ -126,9 +126,16 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ViewHolder> im
                     for (Object row : exams) {
                         if (row instanceof Exam) {
                             Exam exam = (Exam) row;
-                            if (exam.getTitle().toLowerCase().contains(charString.toLowerCase()) ||
-                                    exam.getSubject().toLowerCase().contains(charString.toLowerCase())) {
-                                filteredList.add(row);
+                            if (exam.getTitle() != null) {
+                                if ( exam.getTitle().toLowerCase().contains(charString.toLowerCase()) ) {
+                                    filteredList.add(row);
+                                }
+                            }
+
+                            if (exam.getSubject() != null) {
+                                if ( exam.getSubject().toLowerCase().contains(charString.toLowerCase()) ) {
+                                    filteredList.add(row);
+                                }
                             }
                         }
                     }

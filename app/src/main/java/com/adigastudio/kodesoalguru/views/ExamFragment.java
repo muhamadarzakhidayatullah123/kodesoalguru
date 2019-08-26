@@ -65,7 +65,6 @@ public class ExamFragment extends Fragment {
         binding.adView.loadAd(new AdConfig().getAdRequest());
 
         viewModel = ViewModelProviders.of(this).get(ExamViewModel.class);
-        viewModel.init(DEFAULT_QUERY_LIMIT);
         binding.appBar.toolbar.setNavigationIcon(null);
 
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -131,7 +130,7 @@ public class ExamFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.refresh(DEFAULT_QUERY_LIMIT);
+        viewModel.init(DEFAULT_QUERY_LIMIT);
     }
 
     private void insertData(List<Exam> results){
@@ -185,7 +184,7 @@ public class ExamFragment extends Fragment {
                 }).build();
 
         // Load the Native ads.
-        int numberOfAds = mRecyclerViewItems.size() / 3;
+        int numberOfAds = mRecyclerViewItems.size() / 4;
         adLoader.loadAds(new AdConfig().getAdRequest(), numberOfAds);
     }
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.adigastudio.kodesoalguru.R;
+import com.adigastudio.kodesoalguru.models.Exam;
 import com.adigastudio.kodesoalguru.utils.MyTextView;
 
 import java.util.List;
@@ -64,6 +65,21 @@ public class TextViewBindingAdapters {
             view.setText(view.getContext().getResources().getString(R.string.view_result));
             view.setTextColor(view.getContext().getResources().getColor(R.color.colorSuccess));
             view.setBackground(view.getContext().getResources().getDrawable(R.drawable.shape_rounded_rectangle_nocolor_success_outline));
+        }
+    }
+
+    @BindingAdapter({"bind:isAdministrator", "bind:isModerator", "bind:isTeacher" })
+    public static void setRole(TextView textView, Boolean isAdministrator, Boolean isModerator, Boolean isTeacher) {
+        if (isAdministrator) {
+            textView.setText(textView.getContext().getResources().getString(R.string.is_administrator));
+        }
+
+        if (isModerator) {
+            textView.setText(textView.getContext().getResources().getString(R.string.is_moderator));
+        }
+
+        if (isTeacher) {
+            textView.setText(textView.getContext().getResources().getString(R.string.is_teacher));
         }
     }
 

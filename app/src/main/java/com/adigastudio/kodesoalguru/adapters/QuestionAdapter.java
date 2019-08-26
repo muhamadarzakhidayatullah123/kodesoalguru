@@ -1,6 +1,7 @@
 package com.adigastudio.kodesoalguru.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,12 +57,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 // Fall through.
             default:
                 QuestionListBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.question_list, parent, false);
-                binding.getRoot().setOnClickListener(v -> {
-                    final Question chosen = binding.getQuestion();
-                    if (chosen != null) {
-                        onItemClickedListener.onClicked(chosen);
-                    }
-                });
                 return new ViewHolder(binding);
         }
     }
@@ -124,16 +119,53 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                     List<Object> filteredList = new ArrayList<>();
                     for (Object row : questions) {
                         if (row instanceof Question) {
-                            Question exam = (Question) row;
-                            if ( exam.getQuestion().toLowerCase().contains(charString.toLowerCase()) ||
-                                    exam.getQuestionImageInformation().toLowerCase().contains(charString.toLowerCase()) ||
-                                    exam.getChoiceA().toLowerCase().contains(charString.toLowerCase()) ||
-                                    exam.getChoiceB().toLowerCase().contains(charString.toLowerCase()) ||
-                                    exam.getChoiceC().toLowerCase().contains(charString.toLowerCase()) ||
-                                    exam.getChoiceD().toLowerCase().contains(charString.toLowerCase()) ||
-                                    exam.getChoiceE().toLowerCase().contains(charString.toLowerCase()) ||
-                                    exam.getBasic().toLowerCase().contains(charString.toLowerCase()) ) {
-                                filteredList.add(row);
+                            Question question = (Question) row;
+                            if (question.getQuestion() != null) {
+                                if ( question.getQuestion().toLowerCase().contains(charString.toLowerCase()) ) {
+                                    filteredList.add(row);
+                                }
+                            }
+
+                            if (question.getQuestionImageInformation() != null) {
+                                if ( question.getQuestionImageInformation().toLowerCase().contains(charString.toLowerCase()) ) {
+                                    filteredList.add(row);
+                                }
+                            }
+
+                            if (question.getChoiceA() != null) {
+                                if ( question.getChoiceA().toLowerCase().contains(charString.toLowerCase()) ) {
+                                    filteredList.add(row);
+                                }
+                            }
+
+                            if (question.getChoiceB() != null) {
+                                if ( question.getChoiceB().toLowerCase().contains(charString.toLowerCase()) ) {
+                                    filteredList.add(row);
+                                }
+                            }
+
+                            if (question.getChoiceC() != null) {
+                                if ( question.getChoiceC().toLowerCase().contains(charString.toLowerCase()) ) {
+                                    filteredList.add(row);
+                                }
+                            }
+
+                            if (question.getChoiceD() != null) {
+                                if ( question.getChoiceD().toLowerCase().contains(charString.toLowerCase()) ) {
+                                    filteredList.add(row);
+                                }
+                            }
+
+                            if (question.getChoiceE() != null) {
+                                if ( question.getChoiceE().toLowerCase().contains(charString.toLowerCase()) ) {
+                                    filteredList.add(row);
+                                }
+                            }
+
+                            if (question.getBasic() != null) {
+                                if ( question.getBasic().toLowerCase().contains(charString.toLowerCase()) ) {
+                                    filteredList.add(row);
+                                }
                             }
                         }
                     }

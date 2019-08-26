@@ -18,7 +18,6 @@ public class QuestionViewModel extends ViewModel {
     private String TAG = "QuestionViewModel";
     private MutableLiveData<List<Question>> data = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isRefreshLoading = new MutableLiveData<>();
 
     public void init(String examId){
         isLoading.setValue(true);

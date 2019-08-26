@@ -40,7 +40,6 @@ public class ExamRepository {
                     } else {
                         firestore.collection("exams")
                                 .whereEqualTo("user", user.getUserId())
-                                .whereEqualTo("active", true)
                                 .orderBy("datetime", Query.Direction.DESCENDING).limit(limit).get().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 if (task.getResult().getDocuments().size() == 0) {

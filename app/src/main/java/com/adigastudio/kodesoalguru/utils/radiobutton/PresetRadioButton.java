@@ -21,7 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 
-public class PresetRadioButton extends RelativeLayout implements RadioCheckable {
+public class PresetRadioButton extends RelativeLayout {
     // Views
     private TextView mValueTextView;
 
@@ -38,7 +38,7 @@ public class PresetRadioButton extends RelativeLayout implements RadioCheckable 
     private OnClickListener mOnClickListener;
     private OnTouchListener mOnTouchListener;
     private boolean mChecked;
-    private ArrayList<OnCheckedChangeListener> mOnCheckedChangeListeners = new ArrayList<>();
+//    private ArrayList<OnCheckedChangeListener> mOnCheckedChangeListeners = new ArrayList<>();
 
 
     //================================================================================
@@ -131,7 +131,7 @@ public class PresetRadioButton extends RelativeLayout implements RadioCheckable 
     }
 
     private void onTouchDown(MotionEvent motionEvent) {
-        setChecked(true);
+//        setChecked(true);
     }
 
     private void onTouchUp(MotionEvent motionEvent) {
@@ -166,42 +166,42 @@ public class PresetRadioButton extends RelativeLayout implements RadioCheckable 
     // Checkable implementation
     //================================================================================
 
-    @Override
-    public void setChecked(boolean checked) {
-        if (mChecked != checked) {
-            mChecked = checked;
-            if (!mOnCheckedChangeListeners.isEmpty()) {
-                for (int i = 0; i < mOnCheckedChangeListeners.size(); i++) {
-                    mOnCheckedChangeListeners.get(i).onCheckedChanged(this, mChecked);
-                }
-            }
-            if (mChecked) {
-                setCheckedState();
-            } else {
-                setNormalState();
-            }
-        }
-    }
-
-    @Override
-    public boolean isChecked() {
-        return mChecked;
-    }
-
-    @Override
-    public void toggle() {
-        setChecked(!mChecked);
-    }
-
-    @Override
-    public void addOnCheckChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
-        mOnCheckedChangeListeners.add(onCheckedChangeListener);
-    }
-
-    @Override
-    public void removeOnCheckChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
-        mOnCheckedChangeListeners.remove(onCheckedChangeListener);
-    }
+//    @Override
+//    public void setChecked(boolean checked) {
+//        if (mChecked != checked) {
+//            mChecked = checked;
+//            if (!mOnCheckedChangeListeners.isEmpty()) {
+//                for (int i = 0; i < mOnCheckedChangeListeners.size(); i++) {
+//                    mOnCheckedChangeListeners.get(i).onCheckedChanged(this, mChecked);
+//                }
+//            }
+//            if (mChecked) {
+//                setCheckedState();
+//            } else {
+//                setNormalState();
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public boolean isChecked() {
+//        return mChecked;
+//    }
+//
+//    @Override
+//    public void toggle() {
+//        setChecked(!mChecked);
+//    }
+//
+//    @Override
+//    public void addOnCheckChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
+//        mOnCheckedChangeListeners.add(onCheckedChangeListener);
+//    }
+//
+//    @Override
+//    public void removeOnCheckChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
+//        mOnCheckedChangeListeners.remove(onCheckedChangeListener);
+//    }
 
     //================================================================================
     // Inner classes

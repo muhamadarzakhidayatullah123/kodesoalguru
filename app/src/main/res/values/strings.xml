@@ -9,6 +9,7 @@
     <string name="register_activity">Pendaftaran</string>
     <string name="forgot_password_activity">Lupa Password</string>
     <string name="home_activity">Dashboard</string>
+    <string name="question_activity">Soal</string>
     <string name="result_fragment">Nilai</string>
     <string name="dashboard_fragment">Dashboard</string>
     <string name="exam_fragment">Ujian</string>
@@ -51,6 +52,9 @@
     <string name="view_all">Lihat Semua</string>
     <string name="basic">KD: %s</string>
     <string name="correct_choice">Jawaban: %s</string>
+    <string name="is_administrator">Administrator</string>
+    <string name="is_moderator">Moderator</string>
+    <string name="is_teacher">Pengajar</string>
 
     <!--Setting-->
     <string name="account">Akun</string>
@@ -110,14 +114,14 @@
     <string name="error_password_not_match">Password baru dan password konfirmasi harus sama</string>
 
     <!--URL-->
-    <string name="terms_url">https://kodesoal.com/student-terms</string>
+    <string name="terms_url">https://kodesoal.com/teacher-terms</string>
     <string name="privacy_url">https://kodesoal.com/privacy-policy</string>
-    <string name="play_store_url">https://play.google.com/store/apps/details?id=com.adigastudio.kodesoal</string>
+    <string name="play_store_url">https://play.google.com/store/apps/details?id=com.adigastudio.kodesoalguru</string>
 
     <!--Ads-->
-    <string name="ad_app_id">ca-app-pub-9264825083683066~3782021704</string>
-    <string name="ad_unit_banner">ca-app-pub-9264825083683066/1064359026</string>
-    <string name="ad_unit_interstitial">ca-app-pub-9264825083683066/5186425102</string>
-    <string name="ad_unit_native">ca-app-pub-9264825083683066/3199282365</string>
+    <string name="ad_app_id">ca-app-pub-9264825083683066~3512769831</string>
+    <string name="ad_unit_banner">ca-app-pub-9264825083683066/7303200401</string>
+    <string name="ad_unit_interstitial">ca-app-pub-9264825083683066/8201704328</string>
+    <string name="ad_unit_native">ca-app-pub-9264825083683066/6038575413</string>
 
 </resources>

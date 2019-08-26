@@ -2,6 +2,11 @@
 <layout>
 
     <data>
+
+        <variable
+            name="exam"
+            type="com.adigastudio.kodesoalguru.models.Exam" />
+
         <variable
             name="viewModel"
             type="com.adigastudio.kodesoalguru.viewmodels.QuestionViewModel" />
@@ -14,53 +19,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-            android:visibility="gone"
-            android:indeterminate="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/app_bar"
+            app:title="@{exam.subject}"/>
 
-        <androidx.cardview.widget.CardView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="@dimen/card_elevation"
-            app:cardPreventCornerOverlap="false"
-            app:cardCornerRadius="0dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="@dimen/edit_text_padding_medium"
+            app:layout_constraintTop_toBottomOf="@id/app_bar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.adigastudio.kodesoalguru.utils.ClearableEditText
+                android:id="@+id/edit_search"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/edit_text_padding_medium"
-                android:layout_marginBottom="@dimen/edit_text_padding_medium">
-
-                <com.adigastudio.kodesoalguru.utils.ClearableEditText
-                    android:id="@+id/edit_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:image="@drawable/ic_search_black_24dp"
-                    app:hint="Cari judul atau mata pelajaran"
-                    app:bg="@drawable/shape_rounded_rectangle_default_outline"
-                    android:layout_marginRight="@dimen/edit_text_padding_medium"
-                    android:layout_marginBottom="@dimen/edit_text_padding_medium"
-                    android:layout_marginLeft="@dimen/edit_text_padding_medium"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                android:layout_height="0dp"
+                app:image="@drawable/ic_search_black_24dp"
+                app:hint="Cari pertanyaan, jawaban atau kompetensi dasar"
+                app:bg="@drawable/shape_rounded_rectangle_info"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/main_layout"
@@ -90,11 +76,6 @@
                     app:layout_constraintBottom_toTopOf="@id/ad_view"
                     android:visibility="gone">
 
-                    <include
-                        android:id="@+id/app_bar"
-                        layout="@layout/app_bar"
-                        app:title="@{@string/exam_fragment}"/>
-
                     <ImageView
                         android:id="@+id/image_exam"
                         android:layout_width="wrap_content"
@@ -103,7 +84,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/app_bar" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:layout_width="0dp"

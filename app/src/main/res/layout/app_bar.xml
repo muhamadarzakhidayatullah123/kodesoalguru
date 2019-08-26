@@ -19,6 +19,7 @@
             android:background="@color/colorPrimary"
             app:onNavigationClick="@{title}"
             app:titleTextColor="@android:color/white"
+            app:subtitleTextAppearance="@style/CustomSubtitle"
             app:title="@{@string/toolbar_title(title)}"
             app:navigationIcon="@drawable/ic_keyboard_arrow_left_white_32dp"/>
 

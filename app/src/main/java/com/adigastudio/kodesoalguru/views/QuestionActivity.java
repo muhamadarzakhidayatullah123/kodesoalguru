@@ -8,7 +8,6 @@ import android.view.View;
 import com.adigastudio.kodesoalguru.MainApplication;
 import com.adigastudio.kodesoalguru.R;
 import com.adigastudio.kodesoalguru.adapters.EmptyAdapter;
-import com.adigastudio.kodesoalguru.adapters.ExamAdapter;
 import com.adigastudio.kodesoalguru.adapters.QuestionAdapter;
 import com.adigastudio.kodesoalguru.databinding.QuestionActivityBinding;
 import com.adigastudio.kodesoalguru.interfaces.MyListeners.OnItemClickedListener;
@@ -22,6 +21,8 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.adigastudio.kodesoalguru.utils.MyEnum.DEFAULT_QUERY_LIMIT;
+import static com.adigastudio.kodesoalguru.utils.MyEnum.ADD_DATA;
+import static com.adigastudio.kodesoalguru.utils.MyEnum.REMOVE_DATA;
+import static com.adigastudio.kodesoalguru.utils.MyEnum.UPDATE_DATA;
 
 public class QuestionActivity extends AppCompatActivity {
     private QuestionViewModel viewModel;
@@ -43,32 +46,26 @@ public class QuestionActivity extends AppCompatActivity {
     private List<UnifiedNativeAd> mNativeAds = new ArrayList<>();
     private AdLoader adLoader;
     private List<Object> mRecyclerViewItems = new ArrayList<>();
-    private String examId;
 
+    private int REPEAT_OF_ADS = 4;
+    private int numberOfAds;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(QuestionActivity.this, R.layout.question_activity);
-
+        Exam exam = Parcels.unwrap(getIntent().getParcelableExtra("exam"));
+        binding.setExam(exam);
+        binding.appBar.toolbar.setSubtitle(exam.getTitle());
         checkUser();
         binding.adView.loadAd(new AdConfig().getAdRequest());
 
-        Intent intent = getIntent();
-        examId = intent.getStringExtra("exam_id");
-
         viewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
-        viewModel.init(examId);
+        viewModel.init(exam.getExamId());
 
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerView.setLayoutManager(linearLayoutManager);
         binding.recyclerView.setAdapter(new EmptyAdapter());
-
-//        onItemClickedListener = item -> {
-//            Intent intent = new Intent(getApplicationContext(), DetailExamActivity.class);
-//            intent.putExtra("exam_id", item.getExamId());
-//            startActivity(intent);
-//        };
 
         binding.layoutSearch.setVisibility(View.GONE);
         viewModel.getIsLoading().observe(this, status -> {
@@ -84,17 +81,53 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getQuestions().observe(this, results -> {
-            mRecyclerViewItems.clear();
-            mNativeAds.clear();
-            insertData(results);
-            loadNativeAds();
+        viewModel.getQuestions().observe(this, questions -> {
+            if (questions.size() > 0) {
+                numberOfAds = questions.size() / REPEAT_OF_ADS;
+                switch (questions.get(0).getAction()) {
+                    case ADD_DATA:
+                        mRecyclerViewItems.addAll(0, questions);
+                        break;
+                    case UPDATE_DATA:
+                        int updateIndex = findIndex(questions);
+                        mRecyclerViewItems.set(updateIndex, questions.get(0));
+                        break;
+                    case REMOVE_DATA:
+                        int removeIndex = findIndex(questions);
+                        mRecyclerViewItems.remove(removeIndex);
+                        break;
+                }
+                mNativeAds.clear();
+                removeNativeAds();
+                loadNativeAds();
+            }
+
             initRecyclerView();
         });
 
         binding.editSearch.setOnTextChangedListener(text -> {
             adapter.getFilter().filter(text);
         });
+    }
+
+    private Integer findIndex(List<Question> questions){
+        for (int i = 0; i < mRecyclerViewItems.size(); i++) {
+            if (mRecyclerViewItems.get(i) instanceof Question) {
+                Question question = (Question) mRecyclerViewItems.get(i);
+                if (questions.get(0).getQuestionId().equals(question.getQuestionId())) {
+                    return i;
+                }
+            }
+        }
+        return null;
+    }
+
+    private void removeNativeAds(){
+        for (int i = 0; i < mRecyclerViewItems.size(); i++) {
+            if (mRecyclerViewItems.get(i) instanceof UnifiedNativeAd) {
+                mRecyclerViewItems.remove(i);
+            }
+        }
     }
 
     @Override
@@ -108,10 +141,6 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-    }
-
-    private void insertData(List<Question> questions){
-        mRecyclerViewItems.addAll(questions);
     }
 
     private void initRecyclerView(){
@@ -161,7 +190,6 @@ public class QuestionActivity extends AppCompatActivity {
                 }).build();
 
         // Load the Native ads.
-        int numberOfAds = mRecyclerViewItems.size() / 3;
         adLoader.loadAds(new AdConfig().getAdRequest(), numberOfAds);
     }
 
