@@ -39,11 +39,10 @@ public class WebViewActivity extends AppCompatActivity {
 
         binding.appBar.setTitle(title);
 
-        WebView webView = (WebView) findViewById(R.id.web_view);
-        webView.setWebViewClient(webViewClient);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.loadUrl(url);
+        binding.webView.setWebViewClient(webViewClient);
+        binding.webView.getSettings().setJavaScriptEnabled(true);
+        binding.webView.getSettings().setDomStorageEnabled(true);
+        binding.webView.loadUrl(url);
 
         showProgressBar();
 

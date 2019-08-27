@@ -73,9 +73,9 @@ public class HomeActivity extends AppCompatActivity {
                         }
                         break;
                     case R.id.action_help:
-//                        if (!(currentFragment instanceof ResultFragment)) {
-//                            new InitFragment().init(getSupportFragmentManager(), new ResultFragment());
-//                        }
+                        if (!(currentFragment instanceof HelpFragment)) {
+                            new InitFragment().init(getSupportFragmentManager(), new HelpFragment());
+                        }
                         break;
                     case R.id.action_setting:
                         if (!(currentFragment instanceof SettingFragment)) {
@@ -167,6 +167,9 @@ public class HomeActivity extends AppCompatActivity {
             } else if (target.equals(getString(R.string.setting_fragment))) {
                 fragment = new SettingFragment();
                 binding.bottomNavigation.setSelectedItemId(R.id.action_setting);
+            } else if (target.equals(getString(R.string.help_fragment))) {
+                fragment = new HelpFragment();
+                binding.bottomNavigation.setSelectedItemId(R.id.action_help);
             } else {
                 fragment = new ExamFragment();
                 binding.bottomNavigation.setSelectedItemId(R.id.action_exam);

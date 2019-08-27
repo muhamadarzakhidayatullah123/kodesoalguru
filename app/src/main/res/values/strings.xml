@@ -13,6 +13,7 @@
     <string name="result_fragment">Nilai</string>
     <string name="dashboard_fragment">Dashboard</string>
     <string name="exam_fragment">Ujian</string>
+    <string name="help_fragment">Bantuan</string>
     <string name="announcement_fragment">Pengumuman</string>
     <string name="setting_fragment">Pengaturan</string>
     <string name="detail_exam_activity">Rincian Ujian</string>
@@ -116,6 +117,7 @@
     <!--URL-->
     <string name="terms_url">https://kodesoal.com/teacher-terms</string>
     <string name="privacy_url">https://kodesoal.com/privacy-policy</string>
+    <string name="helps_url">https://kodesoal.com/teacher-helps</string>
     <string name="play_store_url">https://play.google.com/store/apps/details?id=com.adigastudio.kodesoalguru</string>
 
     <!--Ads-->
