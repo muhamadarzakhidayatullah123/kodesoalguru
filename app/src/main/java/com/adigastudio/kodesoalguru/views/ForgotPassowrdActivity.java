@@ -1,8 +1,11 @@
 package com.adigastudio.kodesoalguru.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,12 +28,10 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
-import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.adigastudio.kodesoalguru.utils.MyEnum.FAILED_MESSAGE;
 
@@ -44,16 +45,16 @@ public class ForgotPassowrdActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(ForgotPassowrdActivity.this, R.layout.forgot_password_activity);
+        binding = DataBindingUtil.setContentView(this, R.layout.forgot_password_activity);
 
         binding.adView.loadAd(new AdConfig().getAdRequest());
-        loadInterstitialAd();
 
         viewModel = ViewModelProviders.of(this).get(ForgotPasswordViewModel.class);
         binding.setViewModel(viewModel);
         MyProgressBar.init(this, binding.appBar.progressBar, android.R.color.white);
 
         clickListener = v -> {
+            loadInterstitialAd();
             if (v.getId() == binding.buttonSend.getId()) {
                 String email = binding.editEmail.getText().toString();
                 if (TextUtils.isEmpty(Objects.requireNonNull(email))) {
@@ -95,6 +96,12 @@ public class ForgotPassowrdActivity extends AppCompatActivity {
         CheckConnectionData.Check(this, this, binding.getRoot());
     }
 
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        Log.d(TAG, "onCreateView: ");
+        return super.onCreateView(name, context, attrs);
+    }
+
     private void loadInterstitialAd(){
         if (interstitialAd == null) {
             interstitialAd = new InterstitialAd(getApplicationContext());
@@ -130,12 +137,6 @@ public class ForgotPassowrdActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
     private void showProgressBar(){
         binding.appBar.progressBar.setVisibility(View.VISIBLE);
         binding.appBar.toolbar.setNavigationIcon(null);
@@ -163,7 +164,9 @@ public class ForgotPassowrdActivity extends AppCompatActivity {
         super.onDestroy();
         binding.adView.setAdListener(null);
         binding.adView.destroy();
-        interstitialAd.setAdListener(null);
+        if (interstitialAd != null) {
+            interstitialAd.setAdListener(null);
+        }
         MainApplication.getRefWatcher(getApplicationContext()).watch(this);
     }
 }

@@ -52,12 +52,12 @@ public class ChangeEmailActivity extends AppCompatActivity {
 
         checkUser();
         binding.adView.loadAd(new AdConfig().getAdRequest());
-        loadInterstitialAd();
 
         viewModel = ViewModelProviders.of(this).get(ChangeEmailViewModel.class);
         binding.setViewModel(viewModel);
 
         clickListener = v -> {
+            loadInterstitialAd();
             if (v.getId() == binding.buttonSave.getId()) {
                 Login loginUser = new Login(binding.editNewEmail.getText().toString(), binding.editPassword.getText().toString());
                 if (TextUtils.isEmpty(Objects.requireNonNull(loginUser).getEmail())) {
@@ -93,23 +93,17 @@ public class ChangeEmailActivity extends AppCompatActivity {
         });
 
         viewModel.getChangeEmailStatus().observe(this, user -> {
-            if (user.getError() == null) {
-                if (interstitialAd.isLoaded()) {
-                    interstitialAd.show();
-                    interstitialAd.setAdListener(new AdListener() {
-                        @Override
-                        public void onAdClosed() {
-                            super.onAdClosed();
-                            getStatus(user);
-                        }
-                    });
-                } else {
-                    getStatus(user);
-                }
+            if (interstitialAd.isLoaded()) {
+                interstitialAd.show();
+                interstitialAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdClosed() {
+                        super.onAdClosed();
+                        getStatus(user);
+                    }
+                });
             } else {
-                Intent errorIntent = new Intent(getApplicationContext(), ErrorActivity.class);
-                errorIntent.putExtra("error_message", MyErrorHandling.getErrorMessageFromThrowable(user.getError()));
-                startActivity(errorIntent);
+                getStatus(user);
             }
         });
 
@@ -182,7 +176,9 @@ public class ChangeEmailActivity extends AppCompatActivity {
         super.onDestroy();
         binding.adView.setAdListener(null);
         binding.adView.destroy();
-        interstitialAd.setAdListener(null);
+        if (interstitialAd != null) {
+            interstitialAd.setAdListener(null);
+        }
         MainApplication.getRefWatcher(getApplicationContext()).watch(this);
     }
 

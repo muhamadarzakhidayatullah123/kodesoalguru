@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.adigastudio.kodesoalguru.utils.MyEnum.ADD_DATA;
@@ -46,6 +47,7 @@ public class QuestionActivity extends AppCompatActivity {
     private List<UnifiedNativeAd> mNativeAds = new ArrayList<>();
     private AdLoader adLoader;
     private List<Object> mRecyclerViewItems = new ArrayList<>();
+    private RecyclerView.LayoutManager linearLayoutManager;
 
     private int REPEAT_OF_ADS = 4;
     private int numberOfAds;
@@ -63,7 +65,7 @@ public class QuestionActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
         viewModel.init(exam.getExamId());
 
-        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerView.setLayoutManager(linearLayoutManager);
         binding.recyclerView.setAdapter(new EmptyAdapter());
 
@@ -83,10 +85,11 @@ public class QuestionActivity extends AppCompatActivity {
 
         viewModel.getQuestions().observe(this, questions -> {
             if (questions.size() > 0) {
-                numberOfAds = questions.size() / REPEAT_OF_ADS;
+                Log.d("questions", "onCreate: " + mRecyclerViewItems.size());
+                numberOfAds = mRecyclerViewItems.size() / REPEAT_OF_ADS;
                 switch (questions.get(0).getAction()) {
                     case ADD_DATA:
-                        mRecyclerViewItems.addAll(0, questions);
+                        mRecyclerViewItems.addAll(questions);
                         break;
                     case UPDATE_DATA:
                         int updateIndex = findIndex(questions);
@@ -206,6 +209,11 @@ public class QuestionActivity extends AppCompatActivity {
         }
 
         adapter.notifyDataSetChanged();
+
+
+
+        Log.d("initRecyclerView", "mRecyclerViewItems: " + adapter.getItemCount());
+        binding.recyclerView.scrollToPosition(adapter.getItemCount() -1);
     }
 
     private void checkUser(){

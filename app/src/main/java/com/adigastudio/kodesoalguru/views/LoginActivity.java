@@ -73,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
         viewModel.getCurrentUser().observe(this, user -> {
             if (user != null) {
                 Intent intent = new Intent(this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } else {
                 binding.adView.loadAd(new AdConfig().getAdRequest());
@@ -146,11 +148,15 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onSignUpClick() {
         Intent intent = new Intent(this, RegisterActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
     public void onForgotPasswordClick() {
         Intent intent = new Intent(this, ForgotPassowrdActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 }

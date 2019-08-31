@@ -104,7 +104,6 @@ public class ExamFragment extends Fragment {
             mRecyclerViewItems.clear();
             mNativeAds.clear();
             insertData(results);
-            loadNativeAds();
             initRecyclerView();
         });
 
@@ -134,7 +133,10 @@ public class ExamFragment extends Fragment {
     }
 
     private void insertData(List<Exam> results){
-        mRecyclerViewItems.addAll(results);
+        if  (results != null) {
+            mRecyclerViewItems.addAll(results);
+            loadNativeAds();
+        }
     }
 
     private void initRecyclerView(){

@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import static com.adigastudio.kodesoalguru.utils.MyEnum.ADD_DATA;
 import static com.adigastudio.kodesoalguru.utils.MyEnum.REMOVE_DATA;
 import static com.adigastudio.kodesoalguru.utils.MyEnum.UPDATE_DATA;
+import static com.google.firebase.firestore.Query.Direction.ASCENDING;
 import static com.google.firebase.firestore.Query.Direction.DESCENDING;
 
 public class QuestionRepository {
@@ -40,7 +41,7 @@ public class QuestionRepository {
         Log.d(TAG, "examId: " + examId);
         firestore.collection("questions")
                 .whereEqualTo("exam", examId)
-                .orderBy("created", DESCENDING)
+                .orderBy("created", ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot snapshots,

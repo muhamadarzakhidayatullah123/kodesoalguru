@@ -96,11 +96,9 @@ public class HelpFragment extends Fragment {
     }
     private void showProgressBar(){
         binding.appBar.progressBar.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     private void hideProgressBar(){
         binding.appBar.progressBar.setVisibility(View.GONE);
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 }

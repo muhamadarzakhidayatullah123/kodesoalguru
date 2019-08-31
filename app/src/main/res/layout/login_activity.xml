@@ -96,6 +96,7 @@
                     android:inputType="textPassword"
                     android:paddingLeft="@dimen/edit_text_padding_left"
                     android:text="@={viewModel.password}"
+                    android:maxLength="@integer/password_max_length"
                     android:textColor="@color/colorHint"
                     tools:layout_editor_absoluteX="7dp"
                     tools:layout_editor_absoluteY="200dp" />
@@ -217,8 +218,8 @@
 
         <ImageView
             android:id="@+id/text_title"
-            android:layout_width="@dimen/logo_width"
-            android:layout_height="@dimen/logo_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="100dp"
             android:background="@drawable/ic_logo_white"
             app:layout_constraintBottom_toTopOf="@+id/layout_email"

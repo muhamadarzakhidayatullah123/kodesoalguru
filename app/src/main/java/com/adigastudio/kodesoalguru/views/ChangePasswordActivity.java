@@ -50,12 +50,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         checkUser();
         binding.adView.loadAd(new AdConfig().getAdRequest());
-        loadInterstitialAd();
 
         viewModel = ViewModelProviders.of(this).get(ChangePasswordViewModel.class);
         binding.setViewModel(viewModel);
 
         clickListener = v -> {
+            loadInterstitialAd();
             if (v.getId() == binding.buttonSave.getId()) {
                 String oldPassword = binding.editOldPassword.getText().toString();
                 String newPassword = binding.editNewPassword.getText().toString();
@@ -94,23 +94,17 @@ public class ChangePasswordActivity extends AppCompatActivity {
         });
 
         viewModel.getChangePasswordStatus().observe(this, user -> {
-            if (user.getError() == null) {
-                if (interstitialAd.isLoaded()) {
-                    interstitialAd.show();
-                    interstitialAd.setAdListener(new AdListener() {
-                        @Override
-                        public void onAdClosed() {
-                            super.onAdClosed();
-                            getStatus(user);
-                        }
-                    });
-                } else {
-                    getStatus(user);
-                }
+            if (interstitialAd.isLoaded()) {
+                interstitialAd.show();
+                interstitialAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdClosed() {
+                        super.onAdClosed();
+                        getStatus(user);
+                    }
+                });
             } else {
-                Intent errorIntent = new Intent(getApplicationContext(), ErrorActivity.class);
-                errorIntent.putExtra("error_message", MyErrorHandling.getErrorMessageFromThrowable(user.getError()));
-                startActivity(errorIntent);
+                getStatus(user);
             }
         });
 
@@ -176,7 +170,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onDestroy();
         binding.adView.setAdListener(null);
         binding.adView.destroy();
-        interstitialAd.setAdListener(null);
+        if (interstitialAd != null) {
+            interstitialAd.setAdListener(null);
+        }
         MainApplication.getRefWatcher(getApplicationContext()).watch(this);
     }
 
