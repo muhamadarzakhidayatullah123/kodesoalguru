@@ -27,10 +27,12 @@
     <string name="duration">%1$s menit</string>
     <string name="default_timer">--:--:--</string>
     <string name="success_token">Token benar, mohon tunggu</string>
+    <string name="ok">OK</string>
     <string name="yes">YA</string>
     <string name="no">TIDAK</string>
     <string name="agree">SETUJU</string>
     <string name="disagree">TOLAK</string>
+    <string name="pending">TUNDA</string>
     <string name="back">KEMBALI</string>
     <string name="retry">COBA LAGI</string>
     <string name="start">MULAI</string>
@@ -88,6 +90,11 @@
 
     <!--Verify Email-->
     <string name="success_send_verify_email">Berhasil mengirim email konfirmasi, silakan cek kotak masuk email Anda: %s</string>
+
+    <!--Verify Email-->
+    <string name="new_update_available">Pembaruan aplikasi tersedia</string>
+    <string name="new_update_action">Apakah Anda ingin memperbaruinya sekarang?</string>
+    <string name="new_update_force_action">Silakan perbarui aplikasi Anda sekarang</string>
 
     <!--Error messages-->
     <string name="error_title">Terjadi kesalahan</string>

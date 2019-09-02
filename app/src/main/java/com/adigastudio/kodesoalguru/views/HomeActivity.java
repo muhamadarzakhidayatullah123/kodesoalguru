@@ -1,14 +1,17 @@
 package com.adigastudio.kodesoalguru.views;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.adigastudio.kodesoalguru.BuildConfig;
 import com.adigastudio.kodesoalguru.MainApplication;
 import com.adigastudio.kodesoalguru.R;
 import com.adigastudio.kodesoalguru.databinding.HomeActivityBinding;
@@ -20,6 +23,7 @@ import com.adigastudio.kodesoalguru.utils.InitFragment;
 import com.adigastudio.kodesoalguru.utils.MyErrorHandling;
 import com.adigastudio.kodesoalguru.utils.MyProgressBar;
 import com.adigastudio.kodesoalguru.utils.MySnackBar;
+import com.adigastudio.kodesoalguru.viewmodels.AppUpdateViewModel;
 import com.adigastudio.kodesoalguru.viewmodels.HomeViewModel;
 import com.adigastudio.kodesoalguru.viewmodels.LoginViewModel;
 import com.adigastudio.kodesoalguru.viewmodels.SettingViewModel;
@@ -31,6 +35,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -42,6 +47,7 @@ import static com.adigastudio.kodesoalguru.utils.MyEnum.FRAGMENT;
 public class HomeActivity extends AppCompatActivity {
 
     private HomeViewModel viewModel;
+    private AppUpdateViewModel appUpdateViewModel;
     private HomeActivityBinding binding;
     private String TAG = "HomeActivity";
     private OnNavigationItemSelectedListener onNavigationItemSelectedListener;
@@ -56,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         checkUser();
 
         viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        appUpdateViewModel = ViewModelProviders.of(this).get(AppUpdateViewModel.class);
         MyProgressBar.init(this, binding.progressBar, R.color.colorPrimary);
 
         binding.setViewModel(viewModel);
@@ -252,6 +259,36 @@ public class HomeActivity extends AppCompatActivity {
                     binding.bottomNavigation.setVisibility(View.VISIBLE);
                     binding.contentFrame.setVisibility(View.VISIBLE);
                     binding.layoutVerify.setVisibility(View.GONE);
+
+                    appUpdateViewModel.init();
+                    appUpdateViewModel.getCheckVersion().observe(this, appUpdate -> {
+                        if (appUpdate != null) {
+                            if (appUpdate.getVersionCode() > BuildConfig.VERSION_CODE) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this)
+                                        .setCancelable(false)
+                                        .setTitle(R.string.new_update_available);
+
+                                if (appUpdate.isForceUpdate()) {
+                                    builder.setMessage(R.string.new_update_force_action)
+                                            .setPositiveButton(R.string.ok, null);
+                                } else {
+                                    builder.setMessage(R.string.new_update_action)
+                                            .setPositiveButton(R.string.yes, null)
+                                            .setNegativeButton(R.string.pending, null);
+                                }
+
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.setOnShowListener(dialog -> {
+                                    Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                                    button.setOnClickListener(view -> {
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_url)));
+                                        startActivity(intent);
+                                    });
+                                });
+                                alertDialog.show();
+                            }
+                        }
+                    });
                 }
             }
         });
