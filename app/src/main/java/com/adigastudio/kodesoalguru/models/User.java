@@ -11,6 +11,7 @@ public class User {
     private String password;
     private String institute;
     private boolean administrator;
+    private boolean headmaster;
     private boolean moderator;
     private boolean teacher;
     private boolean student;
@@ -48,18 +49,27 @@ public class User {
         this.verified = verified;
     }
 
-    public User(String userId, String fullName, String email, String institute, boolean administrator, boolean moderator, boolean teacher, boolean student, String studentClass, String studentNumber, Date created) {
+    public User(String userId, String fullName, String email, String institute, boolean administrator, boolean headmaster, boolean moderator, boolean teacher, boolean student, String studentClass, String studentNumber, Date created) {
         this.userId = userId;
         this.fullName = fullName;
         this.email = email;
         this.institute = institute;
         this.administrator = administrator;
+        this.headmaster = headmaster;
         this.moderator = moderator;
         this.teacher = teacher;
         this.student = student;
         this.studentClass = studentClass;
         this.studentNumber = studentNumber;
         this.created = created;
+    }
+
+    public boolean isHeadmaster() {
+        return headmaster;
+    }
+
+    public void setHeadmaster(boolean headmaster) {
+        this.headmaster = headmaster;
     }
 
     public String getUserId() {

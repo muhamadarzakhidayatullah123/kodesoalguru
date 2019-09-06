@@ -56,6 +56,7 @@
     <string name="basic">KD: %s</string>
     <string name="correct_choice">Jawaban: %s</string>
     <string name="is_administrator">Administrator</string>
+    <string name="is_headmaster">Kepala Sekolah</string>
     <string name="is_moderator">Moderator</string>
     <string name="is_teacher">Pengajar</string>
 

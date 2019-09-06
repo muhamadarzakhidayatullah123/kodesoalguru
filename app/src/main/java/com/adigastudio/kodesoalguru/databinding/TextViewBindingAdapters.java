@@ -68,10 +68,14 @@ public class TextViewBindingAdapters {
         }
     }
 
-    @BindingAdapter({"bind:isAdministrator", "bind:isModerator", "bind:isTeacher" })
-    public static void setRole(TextView textView, Boolean isAdministrator, Boolean isModerator, Boolean isTeacher) {
+    @BindingAdapter({"bind:isAdministrator", "bind:isHeadmaster", "bind:isModerator", "bind:isTeacher" })
+    public static void setRole(TextView textView, Boolean isAdministrator, Boolean isHeadmaster, Boolean isModerator, Boolean isTeacher) {
         if (isAdministrator) {
             textView.setText(textView.getContext().getResources().getString(R.string.is_administrator));
+        }
+
+        if (isHeadmaster) {
+            textView.setText(textView.getContext().getResources().getString(R.string.is_headmaster));
         }
 
         if (isModerator) {

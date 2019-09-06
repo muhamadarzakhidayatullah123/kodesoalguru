@@ -36,6 +36,7 @@ public class UserRepository {
                                 document.getString("email"),
                                 document.getString("instance"),
                                 document.getBoolean("administrator"),
+                                document.getBoolean("headmaster"),
                                 document.getBoolean("moderator"),
                                 document.getBoolean("teacher"),
                                 document.getBoolean("student"),

@@ -103,6 +103,7 @@
                             android:layout_height="wrap_content"
                             tools:text="text_role"
                             app:isAdministrator="@{user.isAdministrator}"
+                            app:isHeadmaster="@{user.isHeadmaster}"
                             app:isModerator="@{user.isModerator}"
                             app:isTeacher="@{user.isTeacher}"
                             app:layout_constraintBottom_toBottomOf="parent"
