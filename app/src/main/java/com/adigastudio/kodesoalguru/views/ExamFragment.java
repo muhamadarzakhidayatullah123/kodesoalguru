@@ -22,6 +22,7 @@ import com.adigastudio.kodesoalguru.utils.MyErrorHandling;
 import com.adigastudio.kodesoalguru.utils.MySnackBar;
 import com.adigastudio.kodesoalguru.utils.MyTextView;
 import com.adigastudio.kodesoalguru.viewmodels.ExamViewModel;
+import com.adigastudio.kodesoalguru.viewmodels.LoginViewModel;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
@@ -61,6 +62,7 @@ public class ExamFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.exam_fragment, container, false);
+        checkUser();
 
         binding.adView.loadAd(new AdConfig().getAdRequest());
 
@@ -109,6 +111,7 @@ public class ExamFragment extends Fragment {
 
         binding.swipeRefreshLayout.setOnRefreshListener(() -> {
             viewModel.refresh(DEFAULT_QUERY_LIMIT);
+            binding.swipeRefreshLayout.setRefreshing(false);
         });
 
         binding.editSearch.setOnTextChangedListener(text -> {
@@ -203,5 +206,17 @@ public class ExamFragment extends Fragment {
         }
 
         adapter.notifyDataSetChanged();
+    }
+
+    private void checkUser(){
+        LoginViewModel loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        loginViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
+            if (user == null) {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
     }
 }

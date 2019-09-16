@@ -10,11 +10,11 @@ public class User {
     private String email;
     private String password;
     private String institute;
-    private boolean administrator;
-    private boolean headmaster;
-    private boolean moderator;
-    private boolean teacher;
-    private boolean student;
+    private Boolean administrator;
+    private Boolean headmaster;
+    private Boolean moderator;
+    private Boolean teacher;
+    private Boolean student;
     private String studentClass;
     private String studentNumber;
     private Date created;
@@ -49,7 +49,7 @@ public class User {
         this.verified = verified;
     }
 
-    public User(String userId, String fullName, String email, String institute, boolean administrator, boolean headmaster, boolean moderator, boolean teacher, boolean student, String studentClass, String studentNumber, Date created) {
+    public User(String userId, String fullName, String email, String institute, Boolean administrator, Boolean headmaster, Boolean moderator, Boolean teacher, Boolean student, String studentClass, String studentNumber, Date created) {
         this.userId = userId;
         this.fullName = fullName;
         this.email = email;
@@ -64,11 +64,11 @@ public class User {
         this.created = created;
     }
 
-    public boolean isHeadmaster() {
+    public Boolean isHeadmaster() {
         return headmaster;
     }
 
-    public void setHeadmaster(boolean headmaster) {
+    public void setHeadmaster(Boolean headmaster) {
         this.headmaster = headmaster;
     }
 
@@ -112,35 +112,35 @@ public class User {
         this.institute = institute;
     }
 
-    public boolean isAdministrator() {
+    public Boolean isAdministrator() {
         return administrator;
     }
 
-    public void setAdministrator(boolean administrator) {
+    public void setAdministrator(Boolean administrator) {
         this.administrator = administrator;
     }
 
-    public boolean isModerator() {
+    public Boolean isModerator() {
         return moderator;
     }
 
-    public void setModerator(boolean moderator) {
+    public void setModerator(Boolean moderator) {
         this.moderator = moderator;
     }
 
-    public boolean isTeacher() {
+    public Boolean isTeacher() {
         return teacher;
     }
 
-    public void setTeacher(boolean teacher) {
+    public void setTeacher(Boolean teacher) {
         this.teacher = teacher;
     }
 
-    public boolean isStudent() {
+    public Boolean isStudent() {
         return student;
     }
 
-    public void setStudent(boolean student) {
+    public void setStudent(Boolean student) {
         this.student = student;
     }
 

@@ -147,7 +147,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView(){
-        adapter = new QuestionAdapter(getApplicationContext(), mRecyclerViewItems, onItemClickedListener);
+        adapter = new QuestionAdapter(this, mRecyclerViewItems, onItemClickedListener);
         if (adapter.getItemCount() > 0) {
             if (mRecyclerViewItems.get(0) instanceof Exam) {
                 Exam result = (Exam) mRecyclerViewItems.get(0);

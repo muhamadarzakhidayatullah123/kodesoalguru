@@ -70,19 +70,19 @@ public class TextViewBindingAdapters {
 
     @BindingAdapter({"bind:isAdministrator", "bind:isHeadmaster", "bind:isModerator", "bind:isTeacher" })
     public static void setRole(TextView textView, Boolean isAdministrator, Boolean isHeadmaster, Boolean isModerator, Boolean isTeacher) {
-        if (isAdministrator) {
+        if (isAdministrator != null && isAdministrator) {
             textView.setText(textView.getContext().getResources().getString(R.string.is_administrator));
         }
 
-        if (isHeadmaster) {
+        if (isHeadmaster != null && isHeadmaster) {
             textView.setText(textView.getContext().getResources().getString(R.string.is_headmaster));
         }
 
-        if (isModerator) {
+        if (isModerator != null && isModerator) {
             textView.setText(textView.getContext().getResources().getString(R.string.is_moderator));
         }
 
-        if (isTeacher) {
+        if (isTeacher != null && isTeacher) {
             textView.setText(textView.getContext().getResources().getString(R.string.is_teacher));
         }
     }
