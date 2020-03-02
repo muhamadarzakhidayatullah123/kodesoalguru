@@ -22,52 +22,52 @@ public class TimerBindingAdapters {
 
 //    @BindingAdapter({"bind:serverDate", "bind:examDate", "bind:duration", "bind:realtime"})
     public static void setStatus(View view, Date serverDate, Date examDate, int duration, boolean isRealtime) {
-        try {
-            TextView textView = (TextView) view;
-            Context context = textView.getContext();
-            long serverMillis = serverDate.getTime();
-            long examMillis = examDate.getTime();
-            long durationMillis = TimeUnit.MINUTES.toMillis(duration);
-            long differenceMillis = examMillis - serverMillis;
-
-            String remainingTime;
-            if (differenceMillis >= 0) {
-                if (isRealtime) {
-                    remainingTime = MyDatetime.getRealtimeRemainingTimeString(differenceMillis);
-                } else {
-                    remainingTime = MyDatetime.getRemainingTimeString(differenceMillis);
-                }
-                textView.setBackground(context.getResources().getDrawable(R.drawable.shape_rounded_rectangle_danger_outline));
-                textView.setTextColor(context.getResources().getColor(R.color.colorDanger));
-            } else {
-                differenceMillis = Math.abs(differenceMillis);
-                if (differenceMillis >= durationMillis) {
-                    remainingTime = "SELESAI";
-                    textView.setBackground(context.getResources().getDrawable(R.drawable.shape_rounded_rectangle_info_outline));
-                    textView.setTextColor(context.getResources().getColor(R.color.colorHint));
-                } else {
-                    remainingTime = "DIMULAI";
-                    textView.setBackground(context.getResources().getDrawable(R.drawable.shape_rounded_rectangle_success));
-                    textView.setTextColor(context.getResources().getColor(android.R.color.white));
-                }
-            }
-            textView.setText(remainingTime);
-        } catch (Exception err) {
-            err.printStackTrace();
+        TextView textView = (TextView) view;
+        if (serverDate == null || examDate == null) {
+            textView.setText("--:--:--");
+            return;
         }
+        Context context = textView.getContext();
+        long serverMillis = serverDate.getTime();
+        long examMillis = examDate.getTime();
+        long durationMillis = TimeUnit.MINUTES.toMillis(duration);
+        long differenceMillis = examMillis - serverMillis;
+
+        String remainingTime;
+        if (differenceMillis >= 0) {
+            if (isRealtime) {
+                remainingTime = MyDatetime.getRealtimeRemainingTimeString(differenceMillis);
+            } else {
+                remainingTime = MyDatetime.getRemainingTimeString(differenceMillis);
+            }
+            textView.setBackground(context.getResources().getDrawable(R.drawable.shape_rounded_rectangle_danger_outline));
+            textView.setTextColor(context.getResources().getColor(R.color.colorDanger));
+        } else {
+            differenceMillis = Math.abs(differenceMillis);
+            if (differenceMillis >= durationMillis) {
+                remainingTime = "SELESAI";
+                textView.setBackground(context.getResources().getDrawable(R.drawable.shape_rounded_rectangle_info_outline));
+                textView.setTextColor(context.getResources().getColor(R.color.colorHint));
+            } else {
+                remainingTime = "DIMULAI";
+                textView.setBackground(context.getResources().getDrawable(R.drawable.shape_rounded_rectangle_success));
+                textView.setTextColor(context.getResources().getColor(android.R.color.white));
+            }
+        }
+        textView.setText(remainingTime);
     }
 
     @BindingAdapter({"bind:exam", "bind:isRealtime" })
     public static void setExamStatus(View view, Exam exam, boolean isRealtime) {
-        try {
-            if (isRealtime) {
-                Runnable r = new counter(view, exam, true);
-                handler.postDelayed(r, 1000);
-            } else {
-                setStatus(view, exam.getServerDate(), exam.getDatetime(), exam.getDuration(), false);
-            }
-        } catch (Exception err) {
-            err.printStackTrace();
+        if (exam == null || exam.getDatetime() == null) {
+            return;
+        }
+
+        if (isRealtime) {
+            Runnable r = new counter(view, exam, true);
+            handler.postDelayed(r, 1000);
+        } else {
+            setStatus(view, exam.getServerDate(), exam.getDatetime(), exam.getDuration(), false);
         }
     }
 
@@ -88,24 +88,24 @@ public class TimerBindingAdapters {
 
         @Override
         public void run() {
-            try {
-                final View myView = viewRef.get();
-                if (view.getId() == R.id.text_status) {
-                    setStatus(myView, exam.getServerDate(), new Date(examDateMillis), exam.getDuration(), isRealtime);
-                } else if (view.getId() == R.id.text_timer) {
-                    setExamTimer(myView, exam.getServerDate(), new Date(examDateMillis), exam.getDuration());
-                } else {
-                    setButton(myView, exam.getServerDate(), new Date(examDateMillis), exam.getDuration());
-                }
-                examDateMillis = examDateMillis - 1000;
-                handler.postDelayed(this, 1000);
-            } catch (Exception err) {
-                err.printStackTrace();
+            final View myView = viewRef.get();
+            if (view.getId() == R.id.text_status) {
+                setStatus(myView, exam.getServerDate(), new Date(examDateMillis), exam.getDuration(), isRealtime);
+            } else if (view.getId() == R.id.text_timer) {
+                setExamTimer(myView, exam.getServerDate(), new Date(examDateMillis), exam.getDuration());
+            } else {
+                setButton(myView, exam.getServerDate(), new Date(examDateMillis), exam.getDuration());
             }
+            examDateMillis = examDateMillis - 1000;
+            handler.postDelayed(this, 1000);
         }
 
         private void setExamTimer(View view, Date realtimeServerDate, Date realtimeExamDate, int realtimeDuration){
             TextView textView = (TextView) view;
+            if (realtimeServerDate == null || realtimeExamDate == null) {
+                textView.setText("--:--:--");
+                return;
+            }
             long differenceMillis = realtimeServerDate.getTime() - realtimeExamDate.getTime();
             long durationMillis = TimeUnit.MINUTES.toMillis(realtimeDuration);
             String remainingTime;
@@ -120,6 +120,12 @@ public class TimerBindingAdapters {
 
         private void setButton(View view, Date realtimeServerDate, Date realtimeExamDate, int realtimeDuration){
             Button button = (Button) view;
+            if (realtimeServerDate == null || realtimeExamDate == null) {
+                button.setTextColor(button.getContext().getResources().getColor(R.color.colorHint));
+                button.setBackground(button.getContext().getResources().getDrawable(R.drawable.shape_rounded_rectangle_info_outline));
+                button.setEnabled(false);
+                return;
+            }
             long differenceMillis = realtimeServerDate.getTime() - realtimeExamDate.getTime();
             if (differenceMillis >= 0 && differenceMillis <= TimeUnit.MINUTES.toMillis(realtimeDuration)) {
                 button.setBackground(button.getContext().getResources().getDrawable(R.drawable.shape_rounded_rectangle_button));

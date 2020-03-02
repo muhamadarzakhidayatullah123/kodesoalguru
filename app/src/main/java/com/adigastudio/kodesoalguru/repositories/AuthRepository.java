@@ -4,6 +4,7 @@ import com.adigastudio.kodesoalguru.models.ForgotPassword;
 import com.adigastudio.kodesoalguru.models.Login;
 import com.adigastudio.kodesoalguru.models.User;
 import com.adigastudio.kodesoalguru.utils.MyErrorHandling;
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,7 +53,12 @@ public class AuthRepository {
     public void sendEmail(FirebaseAuthSendEmailCallback firebaseAuthSendEmailCallback){
         getAuthInstance();
         FirebaseUser user = getCurrentUser();
-
+        if (user == null) {
+            NullPointerException nullPointerException = new NullPointerException("Pengguna tidak ditemukan");
+            Crashlytics.logException(nullPointerException);
+            firebaseAuthSendEmailCallback.onCallback(new User(nullPointerException));
+            return;
+        }
         user.sendEmailVerification().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 firebaseAuthSendEmailCallback.onCallback(new User(user.getEmail()));
@@ -65,6 +71,12 @@ public class AuthRepository {
     public void forgotPassword(FirebaseAuthForgotPasswordCallback firebaseAuthForgotPasswordCallback, String email){
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
+        if (auth == null) {
+            NullPointerException nullPointerException = new NullPointerException("Pengguna tidak ditemukan");
+            Crashlytics.logException(nullPointerException);
+            firebaseAuthForgotPasswordCallback.onCallback(new ForgotPassword(nullPointerException));
+            return;
+        }
         auth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 firebaseAuthForgotPasswordCallback.onCallback(new ForgotPassword(true));
@@ -77,6 +89,12 @@ public class AuthRepository {
     public void reload(FirebaseAuthReloadCallback firebaseAuthReloadCallback){
         getAuthInstance();
         FirebaseUser user = getCurrentUser();
+        if (user == null) {
+            NullPointerException nullPointerException = new NullPointerException("Pengguna tidak ditemukan");
+            Crashlytics.logException(nullPointerException);
+            firebaseAuthReloadCallback.onCallback(new User(nullPointerException));
+            return;
+        }
         user.reload().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 firebaseAuthReloadCallback.onCallback(new User(user.isEmailVerified()));
@@ -85,6 +103,7 @@ public class AuthRepository {
             }
         });
     }
+
 
     public void signOut(){
         getAuthInstance();

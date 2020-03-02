@@ -26,6 +26,7 @@ public class CheckConnectionData {
                 Log.d(TAG, "Check: disconnected");
                 MySnackBar.Show(view, context.getResources().getString(R.string.error_no_connetion), Snackbar.LENGTH_INDEFINITE, FAILED_MESSAGE);
                 Intent intent = new Intent(context, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });

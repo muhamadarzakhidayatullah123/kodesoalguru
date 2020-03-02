@@ -109,7 +109,12 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
         binding.editSearch.setOnTextChangedListener(text -> {
-            adapter.getFilter().filter(text);
+            if (adapter == null) {
+                return;
+            }
+            if (text != null) {
+                adapter.getFilter().filter(text);
+            }
         });
     }
 
@@ -165,7 +170,9 @@ public class QuestionActivity extends AppCompatActivity {
             binding.layoutSearch.setVisibility(View.GONE);
         }
         binding.recyclerView.setAdapter(adapter);
-        adapter.getFilter().filter(binding.editSearch.getText());
+        if (adapter != null) {
+            adapter.getFilter().filter(binding.editSearch.getText());
+        }
     }
 
     private void loadNativeAds() {
@@ -210,9 +217,6 @@ public class QuestionActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
-
-
-        Log.d("initRecyclerView", "mRecyclerViewItems: " + adapter.getItemCount());
         binding.recyclerView.scrollToPosition(adapter.getItemCount() -1);
     }
 

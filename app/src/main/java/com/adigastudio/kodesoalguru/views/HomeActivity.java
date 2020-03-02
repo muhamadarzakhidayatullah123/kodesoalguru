@@ -48,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private HomeViewModel viewModel;
     private AppUpdateViewModel appUpdateViewModel;
+    private LoginViewModel loginViewModel;
     private HomeActivityBinding binding;
     private String TAG = "HomeActivity";
     private OnNavigationItemSelectedListener onNavigationItemSelectedListener;
@@ -63,6 +64,7 @@ public class HomeActivity extends AppCompatActivity {
 
         viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         appUpdateViewModel = ViewModelProviders.of(this).get(AppUpdateViewModel.class);
+        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         MyProgressBar.init(this, binding.progressBar, R.color.colorPrimary);
 
         binding.setViewModel(viewModel);
@@ -97,6 +99,12 @@ public class HomeActivity extends AppCompatActivity {
         clickListener = v -> {
             if (v.getId() == binding.buttonSend.getId()) {
                 viewModel.sendEmail();
+            } else if (v.getId() == binding.buttonLogout.getId()) {
+                loginViewModel.doLogout();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         };
         viewModel.setClickCallback(clickListener);

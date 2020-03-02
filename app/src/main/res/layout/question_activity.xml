@@ -28,13 +28,13 @@
             android:id="@+id/layout_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="@dimen/card_elevation"
+            app:cardElevation="0dp"
             app:cardPreventCornerOverlap="false"
             app:cardCornerRadius="0dp"
-            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardBackgroundColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/app_bar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                     android:layout_height="0dp"
                     app:image="@drawable/ic_search_black_24dp"
                     app:hint="Cari pertanyaan, jawaban atau kompetensi dasar"
-                    app:bg="@drawable/shape_rounded_rectangle_default_outline"
+                    app:bg="@drawable/shape_rounded_rectangle_info"
                     android:layout_marginRight="@dimen/edit_text_padding_medium"
                     android:layout_marginBottom="@dimen/edit_text_padding_medium"
                     android:layout_marginLeft="@dimen/edit_text_padding_medium"

@@ -115,7 +115,12 @@ public class ExamFragment extends Fragment {
         });
 
         binding.editSearch.setOnTextChangedListener(text -> {
-            adapter.getFilter().filter(text);
+            if (adapter == null) {
+                return;
+            }
+            if (text != null) {
+                adapter.getFilter().filter(text);
+            }
         });
 
         return binding.getRoot();
@@ -161,7 +166,9 @@ public class ExamFragment extends Fragment {
             binding.layoutSearch.setVisibility(View.GONE);
         }
         binding.recyclerView.setAdapter(adapter);
-        adapter.getFilter().filter(binding.editSearch.getText());
+        if (adapter != null) {
+            adapter.getFilter().filter(binding.editSearch.getText());
+        }
     }
 
     private void loadNativeAds() {

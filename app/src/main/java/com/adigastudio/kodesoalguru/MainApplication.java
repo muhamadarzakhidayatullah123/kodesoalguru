@@ -5,18 +5,27 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 
-public class MainApplication extends Application {
+public class MainApplication extends MultiDexApplication {
     protected static MainApplication context;
     private RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        try {
+            ProviderInstaller.installIfNeeded(this);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
         MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
         context = this;
         if (LeakCanary.isInAnalyzerProcess(this)) {
