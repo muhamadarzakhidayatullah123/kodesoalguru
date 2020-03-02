@@ -129,9 +129,19 @@
     <string name="play_store_url">https://play.google.com/store/apps/details?id=com.adigastudio.kodesoalguru</string>
 
     <!--Ads-->
-    <string name="ad_app_id">ca-app-pub-9264825083683066~3512769831</string>
-    <string name="ad_unit_banner">ca-app-pub-9264825083683066/7303200401</string>
-    <string name="ad_unit_interstitial">ca-app-pub-9264825083683066/8201704328</string>
-    <string name="ad_unit_native">ca-app-pub-9264825083683066/6038575413</string>
+    <!--
+    Sample
+    App id ca-app-pub-3940256099942544~3347511713
+    Banner	ca-app-pub-3940256099942544/6300978111
+    Interstitial	ca-app-pub-3940256099942544/1033173712
+    Interstitial Video	ca-app-pub-3940256099942544/8691691433
+    Rewarded Video	ca-app-pub-3940256099942544/5224354917
+    Native Advanced	ca-app-pub-3940256099942544/2247696110
+    Native Advanced Video	ca-app-pub-3940256099942544/1044960115
+    -->
+    <string name="ad_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="ad_unit_banner">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_unit_interstitial">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="ad_unit_native">ca-app-pub-3940256099942544/2247696110</string>
 
 </resources>
